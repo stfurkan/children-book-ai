@@ -38,7 +38,9 @@ const FormSchema = z.object({
     }),
 })
  
-export function InputForm() {
+export function NewBookForm(
+  { setStory }: { setStory: React.Dispatch<React.SetStateAction<{}>> }
+) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   })
@@ -62,15 +64,14 @@ export function InputForm() {
       })
     }).then(r => r.json());
 
-    console.log(results)
-
     const story = JSON.parse(results.story);
+    setStory(story);
     console.log(story)
   }
  
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full md:w-2/3 space-y-6">
         <FormField
           control={form.control}
           name="page"
