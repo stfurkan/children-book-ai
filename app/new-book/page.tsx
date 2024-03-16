@@ -1,10 +1,14 @@
-import Main from "@/components/Main/Main";
+import { NewBookForm } from "@/components/Forms/NewBookForm";
 
-export default function Home() {
+export default function NewBookPage() {
   return (
     <div className="flex flex-row justify-center">
-        aaa
-      <Main />
+      <div className="flex flex-col w-full items-center">
+        <h1 className="font-mono font-semibold text-base md:text-2xl mb-4">
+          ~ Create a new book ~
+        </h1>
+        <NewBookForm />
+      </div>
     </div>
   );
 }
