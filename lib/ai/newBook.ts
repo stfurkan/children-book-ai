@@ -1,13 +1,18 @@
-import { NextResponse } from 'next/server'
+"use server";
 import OpenAI from 'openai';
+import { auth } from '@/auth';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 })
 
-// TODO: move this to lib folder and remove the api route
+export const createNewBook = async ({ page, story }: { page: number; story: string; }) => {
+  const session = await auth();
 
-export async function POST(request: Request) {
+  if (!session) {
+    throw new Error("Unauthorized");
+  }
+
   /*
   const { page, story } = await request.json();
   
@@ -36,9 +41,9 @@ export async function POST(request: Request) {
     // top_p: 1,
   });
 
-  return NextResponse.json({
+  return {
     story: response.choices[0].message.content
-  });
+  };
   */
 
   const mockResponse = `{
@@ -64,7 +69,7 @@ export async function POST(request: Request) {
     "page18": "And Milo, with a heart as big as his brain, continued dreaming, building, and supporting, proving that even monsters can make dreams come true."
   }`;
   
-  return NextResponse.json({
+  return {
     story: mockResponse
-  });
-}
+  };
+};

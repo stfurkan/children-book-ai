@@ -18,6 +18,7 @@ import { toast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton";
 import { createBookWithPages } from "@/lib/db/newBook";
+import { createNewBook } from "@/lib/ai/newBook";
 
 const FormSchema = z.object({
   page: z
@@ -62,21 +63,18 @@ export function NewBookForm(
       ),
     });
 
-    const results = await fetch('/api/story', {
-      method: 'POST',
-      body: JSON.stringify({
-        page: data.page,
-        story: data.story,
-      })
-    }).then(r => r.json());
+    const results = await createNewBook({
+      page: data.page,
+      story: data.story
+    });
 
-    console.log(results.story)
+    // console.log(results.story)
     const story = JSON.parse(results.story);
     if (setStory) setStory(story);
-    console.log(story)
-    setLoading(false);
-
+    // console.log(story)
+    
     await createBookWithPages(story);
+    setLoading(false);
   }
 
   if (loading) {
