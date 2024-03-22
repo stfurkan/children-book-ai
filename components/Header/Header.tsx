@@ -4,7 +4,18 @@ import { Session } from "next-auth"
 import { Github, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { signInGitHub, signOutUser } from "@/lib/auth/authHelpers";
+
 
 export function Header({ user }: { user?: Session['user']}) {
   return (
@@ -13,16 +24,36 @@ export function Header({ user }: { user?: Session['user']}) {
         Children&rsquo;s Book AI
       </Link>
       {user ? (
-        <div className="flex items-center space-x-2">
-          <Avatar>
-            <AvatarImage src={user.image || undefined} />
-            <AvatarFallback>{user.name?.slice(0,2)}</AvatarFallback>
-          </Avatar>
-          <div className="hidden md:block font-semibold">{user.name}</div>
-          <Button variant="ghost" size="icon" onClick={() => signOutUser()}>
-            <LogOut />
-          </Button>
-        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <div className="flex items-center space-x-2 p-2 border rounded-xl hover:cursor-pointer hover:bg-slate-100">
+              <Avatar>
+                <AvatarImage src={user.image || undefined} />
+                <AvatarFallback>{user.name?.slice(0,2)}</AvatarFallback>
+              </Avatar>
+              <div className="hidden md:block font-semibold">{user.name}</div>
+            </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56">
+            <DropdownMenuLabel>Menu</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem
+                className="hover:cursor-pointer"
+              >
+                Profile
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              className="hover:cursor-pointer"
+              onClick={() => signOutUser()}
+            >
+              Log out
+              <DropdownMenuShortcut><LogOut className="h-4 w-4" /></DropdownMenuShortcut>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       ) : (
         <Button
           variant="outline"
