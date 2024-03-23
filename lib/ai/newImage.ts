@@ -18,6 +18,7 @@ export const createNewImage = async ({ description }: { description: string; }) 
     prompt: `"${description}", children's book illustration.`,
     n: 1,
     size: "1024x1024",
+    quality: "standard",
     response_format: "url", // default is "url"
     user: session.user.id
   });
