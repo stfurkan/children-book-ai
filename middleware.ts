@@ -9,6 +9,12 @@ export default auth((req) => {
     return NextResponse.next()
   }
 
+  // Custom check for /book/[bookId] pattern
+  const isBookRoute = req.nextUrl.pathname.startsWith('/book/') && req.nextUrl.pathname.split('/').length === 3;
+  if (isBookRoute) {
+    return NextResponse.next();
+  }
+
   if (req.auth?.user) {
     return NextResponse.next()
   } else {

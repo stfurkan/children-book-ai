@@ -14,7 +14,7 @@ export const createNewBook = async ({ page, story }: { page: number; story: stri
   }
 
   /*
-  const { page, story } = await request.json();
+  // const { page, story } = await request.json();
   
   const response = await openai.chat.completions.create({
     model: "gpt-4-turbo-preview",

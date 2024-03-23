@@ -22,7 +22,7 @@ export const authorDetails = sqliteTable("author_details", {
   authorId: text("authorId").notNull().unique().references(() => users.id, { onDelete: "cascade" }),
   name: text("name").notNull(),
   bio: text("bio").notNull(),
-  image: text("image").notNull(),
+  image: text("image"),
 });
 
 export const pages = sqliteTable("pages", {

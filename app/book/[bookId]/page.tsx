@@ -1,13 +1,35 @@
+import { notFound } from "next/navigation";
+import { auth } from "@/auth";
+import { fetchBook } from "@/lib/db/fetchBook";
+import BookContent from "@/components/Book/BookContent";
+
 type BookPageProps = {
   params: {
     bookId: string;
   };
+  searchParams: {
+    [key: string]: string;
+  };
 };
 
-export default function BookPage({ params: { bookId } }: BookPageProps) {
+export default async function BookPage({ params: { bookId }, searchParams }: BookPageProps) {
+  const session = await auth();
+  const book = await fetchBook(bookId);
+
+  if (!book) {
+    notFound();
+  }
+
+  const pageParam = searchParams?.page ? parseInt(searchParams?.page, 10) : undefined;
+  const page = (pageParam && pageParam > 0 && pageParam <= book.pages.length)
+    ? parseInt(searchParams.page, 10)
+    : undefined;
+
   return (
-    <div className="flex flex-row justify-center">
-      Book ID: {bookId}
-    </div>
+    <BookContent
+      book={book}
+      user={session?.user}
+      page={page}
+    />
   );
 }
