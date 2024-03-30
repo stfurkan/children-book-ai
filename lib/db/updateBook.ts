@@ -90,3 +90,47 @@ export async function updateBookImage(bookId: string, image: string) {
   
   revalidatePath(`/book/${bookId}/summary`);
 }
+
+export async function updateBookStatus(bookId: string, status: boolean) {
+  const session = await auth();
+  const user = session?.user;
+  
+  if (!user) {
+    console.error('User is not authenticated.');
+    return;
+  }
+  
+  const book = await db
+    .select()
+    .from(books)
+    .where(eq(books.id, bookId));
+  
+  if (book.length === 0) {
+    console.error('Book not found.');
+    return;
+  }
+  
+  if (book[0].author !== user.id) {
+    console.error('User is not the author of this book.');
+    return;
+  }
+  
+  try {
+    const updatedBook = await db
+      .update(books)
+      .set({
+        published: status,
+      })
+      .where(eq(books.id, bookId))
+      .returning();
+
+    console.log('Book status has been successfully updated.');
+
+    return updatedBook;
+  } catch (error) {
+      console.error('Failed to update book status:', error);
+  }
+  
+  revalidatePath(`/book/${bookId}/summary`);
+  revalidatePath(`/book/${bookId}/read`);
+}

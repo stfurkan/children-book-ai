@@ -24,9 +24,10 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Textarea } from '@/components/ui/textarea';
+import { BookNav } from './BookNav';
+import { BookTitle } from './BookTitle';
 import { AuthorType, BookType, PageType } from '@/types/dbTypes';
 import { createNewImage } from '@/lib/ai/newImage';
-import { BookNav } from './BookNav';
 import { updateBookImage, updateBookSummary } from '@/lib/db/updateBook';
 
 export function BookSummary(
@@ -53,10 +54,13 @@ export function BookSummary(
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
-      <div className="mx-auto grid w-full max-w-6xl">
-        <h1 className="text-3xl font-semibold">{bookDetails.title}</h1>
-        <span className="text-lg font-mono">by {author.authorName}</span>
-      </div>
+      <BookTitle
+        bookId={bookDetails.id}
+        title={bookDetails.title}
+        author={author.authorName}
+        status={bookDetails.published}
+        isUserAuthor={isUserAuthor}
+      />
       <div className="mx-auto grid w-full max-w-6xl items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]">
         <BookNav bookId={bookDetails.id} pages={pages} />
         <div className="grid gap-6">
