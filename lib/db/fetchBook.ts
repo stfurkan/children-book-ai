@@ -1,7 +1,8 @@
 "use server";
-import { eq } from "drizzle-orm";
+import { and, count, eq } from "drizzle-orm";
 import { db } from "@/db";
 import { authorDetails, books, pages } from "@/db/schema";
+import { auth } from "@/auth";
 
 export async function fetchBook(bookId: string) {
   try {
@@ -34,5 +35,123 @@ export async function fetchBook(bookId: string) {
     };
   } catch (error) {
     console.error('Failed to fetch book:', error);
+  }
+}
+
+export async function totalBookCount() {
+  try {
+    const totalBooks = await db
+      .select({ count: count() })
+      .from(books)
+      .where(eq(books.published, true));
+
+    return totalBooks[0].count;
+  } catch (error) {
+    console.error('Failed to fetch total book count:', error);
+  }
+}
+
+export async function fetchBooks(page: number = 1, pageSize: number = 9) {
+  try {
+    const allBooks = await db
+      .select({
+        id: books.id,
+        title: books.title,
+        authorId: books.author,
+        image: books.image,
+        shortDescription: books.shortDescription,
+        authorName: authorDetails.authorName,
+      })
+      .from(books)
+      .leftJoin(authorDetails, eq(books.author, authorDetails.authorId))
+      .where(eq(books.published, true))
+      .limit(pageSize)
+      .offset((page - 1) * pageSize);
+
+    return allBooks;
+  } catch (error) {
+    console.error('Failed to fetch books:', error);
+  }
+}
+
+export async function totalBookCountForUser(userId: string) {
+  try {
+    const totalBooks = await db
+      .select({ count: count() })
+      .from(books)
+      .where(and(eq(books.author, userId), eq(books.published, true)));
+
+    return totalBooks[0].count;
+  } catch (error) {
+    console.error('Failed to fetch total book count for user:', error);
+  }
+}
+
+export async function fetchBooksForUser(userId: string, page: number = 1, pageSize: number = 9) {
+  try {
+    const allBooks = await db
+      .select()
+      .from(books)
+      .where(and(eq(books.author, userId), eq(books.published, true)))
+      .limit(pageSize)
+      .offset((page - 1) * pageSize);
+
+    return allBooks;
+  } catch (error) {
+    console.error('Failed to fetch books for user:', error);
+  }
+}
+
+export async function totalBookCountForCurrentUser(userId: string) {
+  const session = await auth();
+  const user = session?.user;
+
+  if (!user) {
+    console.error('User is not authenticated.');
+    return;
+  }
+
+  if (userId !== user.id) {
+    console.error('User is not the current user.');
+    return;
+  }
+
+  try {
+    const totalBooks = await db
+      .select({ count: count() })
+      .from(books)
+      .where(eq(books.author, userId));
+
+    return totalBooks[0].count;
+  } catch (error) {
+    console.error('Failed to fetch total book count for current user:', error);
+  }
+}
+
+export async function fetchBooksForCurrentUser(userId: string, page: number = 1, pageSize: number = 9) {
+  const session = await auth();
+  const user = session?.user;
+
+  if (!user) {
+    console.error('User is not authenticated.');
+    return;
+  }
+
+  if (userId !== user.id) {
+    console.error('User is not the current user.');
+    return;
+  }
+
+  try {
+    const allBooks = await db
+      .select()
+      .from(books)
+      .where(eq(books.author, userId))
+      .limit(pageSize)
+      .offset((page - 1) * pageSize);
+
+    return allBooks;
+  } catch (error) {
+    console.error('Failed to fetch books for current user:', error);
   }
 }

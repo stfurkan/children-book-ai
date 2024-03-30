@@ -58,6 +58,7 @@ export function BookSummary(
         bookId={bookDetails.id}
         title={bookDetails.title}
         author={author.authorName}
+        authorId={author.authorId}
         status={bookDetails.published}
         isUserAuthor={isUserAuthor}
       />

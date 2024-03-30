@@ -22,3 +22,12 @@ export type PageType = {
   content: string;
   image: string | null;
 };
+
+export type BookCardType = {
+  id: string;
+  title: string;
+  authorId: string;
+  image: string | null;
+  shortDescription: string | null;
+  authorName: string | null;
+};

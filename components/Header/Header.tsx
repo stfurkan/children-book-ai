@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { Session } from "next-auth"
-import { Github, LogOut } from "lucide-react";
+import { Github, LibraryBig, LogOut, User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -43,6 +43,15 @@ export function Header({ user }: { user?: Session['user']}) {
                   className="hover:cursor-pointer"
                 >
                   Profile
+                  <DropdownMenuShortcut><User className="h-4 w-4" /></DropdownMenuShortcut>
+                </DropdownMenuItem>
+              </Link>
+              <Link href={`/books/${user.id}`}>
+                <DropdownMenuItem
+                  className="hover:cursor-pointer"
+                >
+                  My Books
+                  <DropdownMenuShortcut><LibraryBig className="h-4 w-4" /></DropdownMenuShortcut>
                 </DropdownMenuItem>
               </Link>
             </DropdownMenuGroup>

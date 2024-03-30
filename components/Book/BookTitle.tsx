@@ -1,5 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -18,12 +19,14 @@ export function BookTitle(
     bookId,
     title,
     author,
+    authorId,
     status,
     isUserAuthor
   }: {
     bookId: string;
     title: string;
     author: string;
+    authorId: string;
     status: boolean;
     isUserAuthor?: boolean;
   }
@@ -45,7 +48,12 @@ export function BookTitle(
   return (
     <div className="mx-auto grid w-full max-w-6xl">
       <h1 className="text-3xl font-semibold">{title}</h1>
-      <span className="text-lg font-mono">by {author}</span>
+      <Link
+        href={`/books/${authorId}`}
+        className="text-lg font-mono hover:underline"
+      >
+        by {author}
+      </Link>
 
       {isUserAuthor && (
         <div className="flex flex-row justify-end items-center">

@@ -77,6 +77,7 @@ export function BookContent(
         bookId={bookDetails.id}
         title={bookDetails.title}
         author={author.authorName}
+        authorId={author.authorId}
         status={bookDetails.published}
         isUserAuthor={isUserAuthor}
       />
