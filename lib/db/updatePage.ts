@@ -57,10 +57,8 @@ export async function updatePageContent(pageId: string, content: string) {
     console.error('Failed to update page content:', error);
   }
 
-  revalidatePath(`/book/${bookId}`);
+  revalidatePath(`/book/${bookId}/read`);
 }
-
-// update page image
 
 export async function updatePageImage(pageId: string, image: string) {
   const session = await auth();
@@ -114,5 +112,5 @@ export async function updatePageImage(pageId: string, image: string) {
     console.error('Failed to update page image:', error);
   }
 
-  revalidatePath(`/book/${bookId}`);
+  revalidatePath(`/book/${bookId}/read`);
 }

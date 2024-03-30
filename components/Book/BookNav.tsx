@@ -1,0 +1,39 @@
+import React from 'react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Separator } from '@/components/ui/separator';
+import { PageType } from '@/types/dbTypes';
+
+export function BookNav({ bookId, pages }: { bookId: string; pages: PageType[] }) {
+  return (
+    <nav className="grid gap-4 text-sm text-muted-foreground">
+      <ScrollArea className="h-72 w-48 rounded-md border">
+        <div className="p-4">
+          <h4 className="mb-4 text-base font-semibold leading-none text-slate-800">Pages</h4>
+          <Link
+            href={`/book/${bookId}/summary`}
+            className="text-sm font-medium hover:text-primary underline-offset-4 hover:underline"
+          >
+            Summary
+          </Link>
+          <Separator className="my-2" />
+          {pages.map((page) => (
+            <div key={page.id}>
+              <Link href={`/book/${bookId}/read?page=${page.pageNumber}`}>
+                <Button
+                  variant="unset"
+                  size="unset"
+                  className="hover:text-primary underline-offset-4 hover:underline"
+                >
+                  Page {page.pageNumber}
+                </Button>
+              </Link>
+              <Separator className="my-2" />
+            </div>
+          ))}
+        </div>
+      </ScrollArea>
+    </nav>
+  );
+}
