@@ -38,11 +38,13 @@ export function Header({ user }: { user?: Session['user']}) {
             <DropdownMenuLabel>Menu</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem
-                className="hover:cursor-pointer"
-              >
-                Profile
-              </DropdownMenuItem>
+              <Link href="/profile">
+                <DropdownMenuItem
+                  className="hover:cursor-pointer"
+                >
+                  Profile
+                </DropdownMenuItem>
+              </Link>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem

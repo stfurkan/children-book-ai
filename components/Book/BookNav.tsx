@@ -13,9 +13,14 @@ export function BookNav({ bookId, pages }: { bookId: string; pages: PageType[] }
           <h4 className="mb-4 text-base font-semibold leading-none text-slate-800">Pages</h4>
           <Link
             href={`/book/${bookId}/summary`}
-            className="text-sm font-medium hover:text-primary underline-offset-4 hover:underline"
           >
-            Summary
+            <Button
+              variant="unset"
+              size="unset"
+              className="hover:text-primary underline-offset-4 hover:underline"
+            >
+              Summary
+            </Button>
           </Link>
           <Separator className="my-2" />
           {pages.map((page) => (

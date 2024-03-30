@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Session } from 'next-auth';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -46,18 +46,19 @@ export function BookContent(
   const [isImageEditing, setIsImageEditing] = useState(false);
   const [isEditLoading, setIsEditLoading] = useState(false);
   const [isEditError, setIsEditError] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [currentPageContent, setCurrentPageContent] = useState(page ? pages[page - 1].content : pages[0].content);
   const [imageDescription, setImageDescription] = useState('');
 
   const isUserAuthor = user && bookDetails.author === user.id;
 
-  const handlePageChange = useCallback((page: PageType) => {
+  const handlePageChange = (page: PageType) => {
     setCurrentPage(page);
     setCurrentPageContent(page.content);
 
     // update page search param
     router.push(`/book/${bookDetails.id}/read?page=${page.pageNumber}`);
-  }, [bookDetails.id, router]);
+  }
 
   useEffect(() => {
     if (page) {
@@ -66,13 +67,14 @@ export function BookContent(
         handlePageChange(newPage);
       }
     }
-  }, [handlePageChange, page, pages]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
       <div className="mx-auto grid w-full max-w-6xl">
         <h1 className="text-3xl font-semibold">{bookDetails.title}</h1>
-        <span className="text-lg font-mono">Author name</span>
+        <span className="text-lg font-mono">by {author.authorName}</span>
       </div>
       <div className="mx-auto grid w-full max-w-6xl items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]">
         <BookNav bookId={bookDetails.id} pages={pages} />
@@ -88,11 +90,18 @@ export function BookContent(
                   </AlertDialogTrigger>
                   <AlertDialogContent>
                     <AlertDialogHeader>
-                      <AlertDialogTitle>Create new image</AlertDialogTitle>
+                      <AlertDialogTitle>
+                        {currentPage.image ? 'Change image' : 'Create new image'}
+                      </AlertDialogTitle>
                       <AlertDialogDescription>
                         {isEditError && (
                           <span className="inline-block font-semibold text-red-500 pb-1">
                             Image description can not be empty.
+                          </span>
+                        )}
+                        {error && (
+                          <span className="inline-block font-semibold text-red-500 pb-1">
+                            {error}
                           </span>
                         )}
                         <Textarea
@@ -121,26 +130,32 @@ export function BookContent(
                             setIsEditLoading(false);
                             return;
                           }
+                          
+                          try {
+                            const newImage = await createNewImage({ description: imageDescription });
 
-                          const newImage = await createNewImage({ description: imageDescription });
+                            if (!newImage) {
+                              setIsEditLoading(false);
+                              setIsEditError(true);
+                              return;
+                            }
 
-                          if (!newImage) {
+                            const updatedPage = await updatePageImage(currentPage.id, newImage);
+                            if (updatedPage) handlePageChange(updatedPage[0]);
+
                             setIsEditLoading(false);
-                            setIsEditError(true);
-                            return;
+                            setIsImageEditing(false);
+                            setIsEditError(false);
+                            setImageDescription('');
+                            router.refresh();
+                          } catch (error: any) {
+                            setError(error.message);
+                            setIsEditLoading(false);
                           }
-
-                          const updatedPage = await updatePageImage(currentPage.id, newImage);
-                          if (updatedPage) handlePageChange(updatedPage[0]);
-                          setIsEditLoading(false);
-                          setIsImageEditing(false);
-                          setIsEditError(false);
-                          setImageDescription('');
-                          router.refresh();
                         }}
                         disabled={isEditLoading}
                       >
-                        Update
+                        {currentPage.image ? 'Update' : 'Create'}
                       </AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>

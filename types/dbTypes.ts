@@ -1,7 +1,7 @@
 export type AuthorType = {
   id: string;
   image: string | null;
-  name: string;
+  authorName: string;
   authorId: string;
   bio: string;
 };

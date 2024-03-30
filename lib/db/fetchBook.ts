@@ -17,7 +17,13 @@ export async function fetchBook(bookId: string) {
       .where(eq(pages.bookId, bookId));
 
     const author = await db
-      .select()
+      .select({
+        id: authorDetails.id,
+        authorId: authorDetails.authorId,
+        authorName: authorDetails.authorName,
+        bio: authorDetails.bio,
+        image: authorDetails.image,
+      })
       .from(authorDetails)
       .where(eq(authorDetails.authorId, book[0].author));
 

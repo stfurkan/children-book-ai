@@ -1,9 +1,9 @@
 "use client"
 import { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Button } from "@/components/ui/button"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -12,10 +12,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Textarea } from "@/components/ui/textarea"
-import { toast } from "@/components/ui/use-toast"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { createBookWithPages } from "@/lib/db/newBook";
 import { createNewBook } from "@/lib/ai/newBook";
@@ -40,40 +39,37 @@ const FormSchema = z.object({
     .max(300, {
       message: "Story must not be longer than 300 characters.",
     }),
-})
+});
  
 export function NewBookForm(
   { setStory }: { setStory?: React.Dispatch<React.SetStateAction<{}>> }
 ) {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   })
  
   async function onSubmit(data: z.infer<typeof FormSchema>) {
+    setError(null);
     setLoading(true);
-    toast({
-      title: "You submitted the following story:",
-      description: (
-        <div className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="block text-white">Total page: {data.page}</code>
-          <code className="text-white">Story: {data.story}</code>
-        </div>
-      ),
-    });
 
-    const results = await createNewBook({
-      page: data.page,
-      story: data.story
-    });
-
-    // console.log(results.story)
-    const story = JSON.parse(results.story);
-    if (setStory) setStory(story);
-    // console.log(story)
+    try {
+      const results = await createNewBook({
+        page: data.page,
+        story: data.story
+      });
+  
+      const story = JSON.parse(results.story);
+      if (setStory) setStory(story);
+  
+      await createBookWithPages(story);
+    }
+    catch (error: any) {
+      setError(error.message);
+    }
     
-    await createBookWithPages(story);
     setLoading(false);
   }
 
@@ -93,6 +89,11 @@ export function NewBookForm(
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full md:w-2/3 space-y-6">
+        {error && (
+          <span className="inline-block font-semibold text-red-500 pb-1">
+            Error: {error}
+          </span>
+        )}
         <FormField
           control={form.control}
           name="page"

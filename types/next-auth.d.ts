@@ -9,15 +9,11 @@ declare module "next-auth" {
     user: {
       /** The user's id */
       id: string;
-      /** The user's status */
-      status: string;
     } & DefaultSession["user"];
   };
 
   interface User {
     /** The user's id */
     id?: string;
-    /** The user's status */
-    status: string;
   };
 };

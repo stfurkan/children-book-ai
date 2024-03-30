@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Session } from 'next-auth';
 import {
@@ -23,10 +24,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Textarea } from '@/components/ui/textarea';
-import { updatePageContent, updatePageImage } from '@/lib/db/updatePage';
 import { AuthorType, BookType, PageType } from '@/types/dbTypes';
 import { createNewImage } from '@/lib/ai/newImage';
-import Link from 'next/link';
 import { BookNav } from './BookNav';
 import { updateBookImage, updateBookSummary } from '@/lib/db/updateBook';
 
@@ -46,6 +45,7 @@ export function BookSummary(
   const [isImageEditing, setIsImageEditing] = useState(false);
   const [isEditLoading, setIsEditLoading] = useState(false);
   const [isEditError, setIsEditError] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [currentPageContent, setCurrentPageContent] = useState(bookDetails.shortDescription);
   const [imageDescription, setImageDescription] = useState('');
 
@@ -55,7 +55,7 @@ export function BookSummary(
     <div className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
       <div className="mx-auto grid w-full max-w-6xl">
         <h1 className="text-3xl font-semibold">{bookDetails.title}</h1>
-        <span className="text-lg font-mono">Author name</span>
+        <span className="text-lg font-mono">by {author.authorName}</span>
       </div>
       <div className="mx-auto grid w-full max-w-6xl items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]">
         <BookNav bookId={bookDetails.id} pages={pages} />
@@ -81,6 +81,11 @@ export function BookSummary(
                             Image description can not be empty.
                           </span>
                         )}
+                        {error && (
+                          <span className="inline-block font-semibold text-red-500 pb-1">
+                            {error}
+                          </span>
+                        )}
                         <Textarea
                           value={imageDescription}
                           onChange={(e) => setImageDescription(e.target.value)}
@@ -93,6 +98,7 @@ export function BookSummary(
                         onClick={() => {
                           setImageDescription('');
                           setIsEditError(false);
+                          setError(null);
                         }}
                         disabled={isEditLoading}
                       >
@@ -107,21 +113,27 @@ export function BookSummary(
                             setIsEditLoading(false);
                             return;
                           }
+                          
+                          try {
+                            const newImage = await createNewImage({ description: imageDescription });
 
-                          const newImage = await createNewImage({ description: imageDescription });
+                            if (!newImage) {
+                              setIsEditLoading(false);
+                              setIsEditError(true);
+                              return;
+                            }
 
-                          if (!newImage) {
+                            await updateBookImage(bookDetails.id, newImage);
+
                             setIsEditLoading(false);
-                            setIsEditError(true);
-                            return;
+                            setIsImageEditing(false);
+                            setIsEditError(false);
+                            setImageDescription('');
+                            router.refresh();
+                          } catch (error: any) {
+                            setError(error.message);
+                            setIsEditLoading(false);
                           }
-
-                          await updateBookImage(bookDetails.id, newImage);
-                          setIsEditLoading(false);
-                          setIsImageEditing(false);
-                          setIsEditError(false);
-                          setImageDescription('');
-                          router.refresh();
                         }}
                         disabled={isEditLoading}
                       >
@@ -160,11 +172,13 @@ export function BookSummary(
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                       <AlertDialogHeader>
-                        <AlertDialogTitle>Update page content</AlertDialogTitle>
+                        <AlertDialogTitle>
+                          Update book summary
+                        </AlertDialogTitle>
                         <AlertDialogDescription>
                           {isEditError && (
                             <span className="inline-block font-semibold text-red-500 pb-1">
-                              Page content can not be empty.
+                              Book summary can not be empty.
                             </span>
                           )}
                           <Textarea

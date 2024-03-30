@@ -1,10 +1,9 @@
 "use server";
 import OpenAI from 'openai';
 import { auth } from '@/auth';
+import { decrypt } from '@/lib/encryption';
+import { getAuthorKey } from '@/lib/db/author';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-})
 
 export const createNewBook = async ({ page, story }: { page: number; story: string; }) => {
   const session = await auth();
@@ -13,9 +12,19 @@ export const createNewBook = async ({ page, story }: { page: number; story: stri
     throw new Error("Unauthorized");
   }
 
-  /*
-  // const { page, story } = await request.json();
+  const authorKeyDetails = await getAuthorKey(session.user.id);
   
+  if (!authorKeyDetails.aiKey || !authorKeyDetails.keyIv || !authorKeyDetails.keyAuthTag) {
+    throw new Error("Author's OpenAI key not found! Please add your OpenAI key in the Author Profile page.");
+  }
+
+  const authorKey = decrypt(authorKeyDetails.aiKey, authorKeyDetails.keyIv, authorKeyDetails.keyAuthTag);
+
+  const openai = new OpenAI({
+    apiKey: authorKey
+  });
+  
+  /*
   const response = await openai.chat.completions.create({
     model: "gpt-4-turbo-preview",
     messages: [
@@ -36,6 +45,7 @@ export const createNewBook = async ({ page, story }: { page: number; story: stri
       }
     ],
     response_format: { type: "json_object" },
+    user: session.user.id,
     // temperature: 0.7,
     // max_tokens: 64,
     // top_p: 1,

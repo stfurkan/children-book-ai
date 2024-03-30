@@ -20,9 +20,12 @@ export const books = sqliteTable("books", {
 export const authorDetails = sqliteTable("author_details", {
   id: text("id").notNull().primaryKey().$defaultFn(() => createId()),
   authorId: text("authorId").notNull().unique().references(() => users.id, { onDelete: "cascade" }),
-  name: text("name").notNull(),
+  authorName: text("name").notNull(),
   bio: text("bio").notNull(),
   image: text("image"),
+  aiKey: text("aiKey"),
+  keyIv: text("keyIv"),
+  keyAuthTag: text("keyAuthTag"),
 });
 
 export const pages = sqliteTable("pages", {

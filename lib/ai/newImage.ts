@@ -1,10 +1,8 @@
 "use server";
 import OpenAI from 'openai';
 import { auth } from '@/auth';
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-})
+import { decrypt } from '@/lib/encryption';
+import { getAuthorKey } from '@/lib/db/author';
 
 export const createNewImage = async ({ description }: { description: string; }) => {
   const session = await auth();
@@ -12,6 +10,18 @@ export const createNewImage = async ({ description }: { description: string; }) 
   if (!session) {
     throw new Error("Unauthorized");
   }
+
+  const authorKeyDetails = await getAuthorKey(session.user.id);
+  
+  if (!authorKeyDetails.aiKey || !authorKeyDetails.keyIv || !authorKeyDetails.keyAuthTag) {
+    throw new Error("Author's OpenAI key not found! Please add your OpenAI key in the Author Profile page.");
+  }
+
+  const authorKey = decrypt(authorKeyDetails.aiKey, authorKeyDetails.keyIv, authorKeyDetails.keyAuthTag);
+
+  const openai = new OpenAI({
+    apiKey: authorKey
+  });
 
   const response = await openai.images.generate({
     model: "dall-e-3",
