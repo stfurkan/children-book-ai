@@ -20,7 +20,7 @@ import { signInGitHub, signOutUser } from "@/lib/auth/authHelpers";
 export function Header({ user }: { user?: Session['user']}) {
   return (
     <div className="flex justify-between items-center mx-8">
-      <Link href="/" className="font-mono font-semibold text-md md:text-2xl hover:text-transparent/80">
+      <Link href="/" className="font-mono font-semibold text-sm sm:text-md md:text-2xl hover:text-transparent/80">
         Children&rsquo;s Book AI
       </Link>
       {user ? (

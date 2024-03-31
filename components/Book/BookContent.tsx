@@ -22,6 +22,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { BookNav } from './BookNav';
 import { BookTitle } from './BookTitle';
@@ -29,6 +30,7 @@ import { updatePageContent, updatePageImage } from '@/lib/db/updatePage';
 import { AuthorType, BookType, PageType } from '@/types/dbTypes';
 import { createNewImage } from '@/lib/ai/newImage';
 import { useImagePreload } from '@/hooks/useImagePreload';
+
 
 export function BookContent(
   { book, user, page }: {
@@ -52,8 +54,7 @@ export function BookContent(
   const [currentPageContent, setCurrentPageContent] = useState(page ? pages[page - 1].content : pages[0].content);
   const [imageDescription, setImageDescription] = useState('');
 
-  const fallbackImage = '/book-placeholder.png';
-  const imageSrc = useImagePreload(currentPage.image || '', fallbackImage);
+  const imageSrc = useImagePreload(currentPage.image || '');
 
   const isUserAuthor = user && bookDetails.author === user.id;
 
@@ -113,11 +114,22 @@ export function BookContent(
                             {error}
                           </span>
                         )}
-                        <Textarea
-                          value={imageDescription}
-                          onChange={(e) => setImageDescription(e.target.value)}
-                          disabled={isEditLoading}
-                        />
+                        {isEditLoading && (
+                          <span className="inline-block font-semibold text-blue-500 pb-1">
+                            Image is processing. Please wait...
+                          </span>
+                        )}
+                        <span className="grid w-full gap-1.5">
+                          <Label htmlFor="image-description">
+                            Describe the image
+                          </Label>
+                          <Textarea
+                            id="image-description"
+                            value={imageDescription}
+                            onChange={(e) => setImageDescription(e.target.value)}
+                            disabled={isEditLoading}
+                          />
+                        </span>
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
@@ -179,6 +191,7 @@ export function BookContent(
                     src={imageSrc}
                     alt="Page image"
                     className="w-2/3 rounded-xl"
+                    loading="lazy"
                   />
                 </div>
               )}

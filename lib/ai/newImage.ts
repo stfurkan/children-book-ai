@@ -3,6 +3,7 @@ import OpenAI from 'openai';
 import { auth } from '@/auth';
 import { decrypt } from '@/lib/encryption';
 import { getAuthorKey } from '@/lib/db/author';
+import { uploadRemoteImageToR2 } from '../r2/uploadToR2';
 
 export const createNewImage = async ({ description }: { description: string; }) => {
   const session = await auth();
@@ -32,7 +33,21 @@ export const createNewImage = async ({ description }: { description: string; }) 
     response_format: "url", // default is "url"
     user: session.user.id
   });
+
+  if (!response.data || !response.data[0].url) {
+    throw new Error("Failed to generate image");
+  }
+
+  const imageName = `${session.user.id}/book-image-${Date.now()}.png`;
+
+  const r2Image = await uploadRemoteImageToR2(
+    response.data[0].url,
+    process.env.R2_BUCKET!,
+    imageName
+  );
+
+  const imageUrl = `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/${imageName}`;
   
-  return response.data[0].url;
+  return imageUrl;
 }
   

@@ -12,8 +12,7 @@ import { useImagePreload } from '@/hooks/useImagePreload';
 import { BookCardType } from '@/types/dbTypes';
 
 export function BookCard({ book }: { book: BookCardType }) {
-  const fallbackImage = '/book-placeholder.png';
-  const imageSrc = useImagePreload(book.image || '', fallbackImage);
+  const imageSrc = useImagePreload(book.image || '');
 
   return (
     <Link 
@@ -26,6 +25,7 @@ export function BookCard({ book }: { book: BookCardType }) {
               src={imageSrc}
               alt={book.title}
               className="rounded-xl"
+              loading="lazy"
             />
           </div>
           <CardTitle>{book.title}</CardTitle>

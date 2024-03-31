@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 
+const defaultFallbackImage = `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/book-placeholder.png`;
+
 // Custom hook for preloading images
-export function useImagePreload(src?: string, fallbackSrc?: string) {
+export function useImagePreload(src?: string, fallbackSrc: string = defaultFallbackImage) {
   const [imageSrc, setImageSrc] = useState(src || fallbackSrc);
 
   useEffect(() => {
