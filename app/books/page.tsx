@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { AllBooks } from "@/components/Books/AllBooks";
 import { fetchBooks, totalBookCount } from "@/lib/db/fetchBook";
 
@@ -23,10 +22,6 @@ export default async function BooksPage({ searchParams }: BooksPageProps) {
   return (
     <div className="flex flex-row justify-center">
       <div className="flex flex-col w-full items-center">
-        <h1 className="font-mono font-semibold text-base md:text-2xl mb-4">
-          ~ Books ~
-        </h1>
-        
         <AllBooks allBooks={allBooks} totalPages={totalPages} page={page || 1} />
       </div>
     </div>

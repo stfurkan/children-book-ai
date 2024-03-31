@@ -29,6 +29,7 @@ import { BookTitle } from './BookTitle';
 import { AuthorType, BookType, PageType } from '@/types/dbTypes';
 import { createNewImage } from '@/lib/ai/newImage';
 import { updateBookImage, updateBookSummary } from '@/lib/db/updateBook';
+import { useImagePreload } from '@/hooks/useImagePreload';
 
 export function BookSummary(
   { book, user }: {
@@ -49,6 +50,9 @@ export function BookSummary(
   const [error, setError] = useState<string | null>(null);
   const [currentPageContent, setCurrentPageContent] = useState(bookDetails.shortDescription);
   const [imageDescription, setImageDescription] = useState('');
+
+  const fallbackImage = '/book-placeholder.png';
+  const imageSrc = useImagePreload(bookDetails.image || '', fallbackImage);
 
   const isUserAuthor = user && bookDetails.author === user.id;
 
@@ -152,7 +156,11 @@ export function BookSummary(
             <CardContent>
               {bookDetails.image && (
                 <div className="flex justify-center mb-8">
-                  <img src={bookDetails.image} alt="Page image" className="w-2/3 rounded-xl" />
+                  <img
+                    src={imageSrc}
+                    alt="Page image"
+                    className="w-2/3 rounded-xl"
+                  />
                 </div>
               )}
 

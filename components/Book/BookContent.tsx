@@ -28,6 +28,7 @@ import { BookTitle } from './BookTitle';
 import { updatePageContent, updatePageImage } from '@/lib/db/updatePage';
 import { AuthorType, BookType, PageType } from '@/types/dbTypes';
 import { createNewImage } from '@/lib/ai/newImage';
+import { useImagePreload } from '@/hooks/useImagePreload';
 
 export function BookContent(
   { book, user, page }: {
@@ -50,6 +51,9 @@ export function BookContent(
   const [error, setError] = useState<string | null>(null);
   const [currentPageContent, setCurrentPageContent] = useState(page ? pages[page - 1].content : pages[0].content);
   const [imageDescription, setImageDescription] = useState('');
+
+  const fallbackImage = '/book-placeholder.png';
+  const imageSrc = useImagePreload(currentPage.image || '', fallbackImage);
 
   const isUserAuthor = user && bookDetails.author === user.id;
 
@@ -171,7 +175,11 @@ export function BookContent(
 
               {currentPage.image && (
                 <div className="flex justify-center mb-8">
-                  <img src={currentPage.image} alt="Page image" className="w-2/3 rounded-xl" />
+                  <img
+                    src={imageSrc}
+                    alt="Page image"
+                    className="w-2/3 rounded-xl"
+                  />
                 </div>
               )}
 
