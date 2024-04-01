@@ -2,11 +2,11 @@
 import { NextResponse } from 'next/server';
 import { auth } from "./auth";
 
-const publicRoutes = ['/']
+const publicRoutes = ['/', '/books'];
 
 export default auth((req) => {
   if (publicRoutes.includes(req.nextUrl.pathname)) {
-    return NextResponse.next()
+    return NextResponse.next();
   }
 
   // Custom check for /book/[bookId] pattern
@@ -20,13 +20,13 @@ export default auth((req) => {
   }
 
   if (req.auth?.user) {
-    return NextResponse.next()
+    return NextResponse.next();
   } else {
     const url = req.nextUrl.clone();
     url.pathname = '/'; // Redirect to signin page
     return NextResponse.redirect(url)
   }
-})
+});
 
 export const config = {
   matcher: [
