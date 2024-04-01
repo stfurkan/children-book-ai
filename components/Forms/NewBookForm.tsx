@@ -60,6 +60,8 @@ export function NewBookForm(
         page: data.page,
         story: data.story
       });
+
+      if (!results.story) throw new Error("Failed to create a new book.");
   
       const story = JSON.parse(results.story);
       if (setStory) setStory(story);
