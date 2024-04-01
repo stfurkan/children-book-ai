@@ -4,7 +4,6 @@ import { auth } from '@/auth';
 import { decrypt } from '@/lib/encryption';
 import { getAuthorKey } from '@/lib/db/author';
 
-
 export const createNewBook = async ({ page, story }: { page: number; story: string; }) => {
   const session = await auth();
 
@@ -24,7 +23,6 @@ export const createNewBook = async ({ page, story }: { page: number; story: stri
     apiKey: authorKey
   });
   
-  /*
   const response = await openai.chat.completions.create({
     model: "gpt-4-turbo-preview",
     messages: [
@@ -54,8 +52,8 @@ export const createNewBook = async ({ page, story }: { page: number; story: stri
   return {
     story: response.choices[0].message.content
   };
-  */
 
+  /* // Mock response
   const mockResponse = `{
     "title": "Milo the Monster's Tech Dream",
     "shortSummary": "Milo, a monster with a dream to become a software engineer, achieves his goal, builds a unicorn startup, and then becomes a VC.",
@@ -82,4 +80,5 @@ export const createNewBook = async ({ page, story }: { page: number; story: stri
   return {
     story: mockResponse
   };
+  */
 };
