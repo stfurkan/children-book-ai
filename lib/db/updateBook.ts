@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { books } from "@/db/schema";
+import { deleteImageFromR2 } from "@/lib/r2/deleteFromR2";
 
 export async function updateBookSummary(bookId: string, summary: string) {
   const session = await auth();
@@ -70,6 +71,12 @@ export async function updateBookImage(bookId: string, image: string) {
   if (book[0].author !== user.id) {
     console.error('User is not the author of this book.');
     return;
+  }
+
+  const currentImage = book[0].image;
+  const currentImageKey = currentImage?.replace(`${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/`, '');
+  if (currentImageKey) {
+    await deleteImageFromR2(process.env.R2_BUCKET!, currentImageKey);
   }
   
   try {
