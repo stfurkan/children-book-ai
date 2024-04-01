@@ -47,7 +47,7 @@ export function BookTitle(
 
   return (
     <div className="mx-auto grid w-full max-w-6xl">
-      <h1 className="text-3xl font-semibold">{title}</h1>
+      <h1 className="text-2xl md:text-3xl font-semibold">{title}</h1>
       <Link
         href={`/books/${authorId}`}
         className="text-lg font-mono hover:underline"

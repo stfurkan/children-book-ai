@@ -10,8 +10,18 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { signInGitHub } from "@/lib/auth/authHelpers";
+import { BookCardType } from "@/types/dbTypes";
+import { FeaturedBooks } from "./FeaturedBooks";
 
-export default function Home({ user }: { user?: Session['user'] }) {
+export function Home(
+  {
+    user,
+    allBooks
+  }: {
+    user?: Session['user'];
+    allBooks?: BookCardType[];
+  }
+) {
   return (
     <div className="container mx-auto px-4">
       {/* Hero Section */}
@@ -31,8 +41,8 @@ export default function Home({ user }: { user?: Session['user'] }) {
 
       {/* How It Works Section */}
       <section className="py-12">
-        <h2 className="font-mono text-3xl font-bold text-center mb-8">~ How It Works ~</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <h2 className="font-mono text-2xl md:text-3xl font-bold text-center mb-8">~ How It Works ~</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Step 1 */}
           <Card>
             <CardHeader>
@@ -74,6 +84,9 @@ export default function Home({ user }: { user?: Session['user'] }) {
           </Card>
         </div>
       </section>
+
+      {/* Featured Books Section */}
+      <FeaturedBooks allBooks={allBooks} />
     </div>
   );
 }

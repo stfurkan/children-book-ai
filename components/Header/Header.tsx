@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { Session } from "next-auth"
-import { Github, LibraryBig, LogOut, User } from "lucide-react";
+import { Book, Github, LibraryBig, LogOut, User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,6 +22,11 @@ export function Header({ user }: { user?: Session['user']}) {
     <div className="flex justify-between items-center mx-8">
       <Link href="/" className="font-mono font-semibold text-sm sm:text-md md:text-2xl hover:text-transparent/80">
         Children&rsquo;s Book AI
+      </Link>
+      <Link href="/books" className="group">
+        <Button variant="unset" className="group-hover:underline group-hover:border rounded">
+          <Book className="mr-2" /> Browse Books 
+        </Button>
       </Link>
       {user ? (
         <DropdownMenu>

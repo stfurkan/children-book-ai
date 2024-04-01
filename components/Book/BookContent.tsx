@@ -215,7 +215,7 @@ export function BookContent(
                   >
                     <ChevronLeft />
                   </Button>
-                  <div>
+                  <div className="text-sm sm:text-base text-nowrap">
                     Page {currentPage.pageNumber} of {pages.length}
                   </div>
                   <Button
