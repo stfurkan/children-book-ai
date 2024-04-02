@@ -11,7 +11,7 @@ export type BookType = {
   id: string;
   title: string;
   image: string | null;
-  shortDescription: string | null;
+  shortDescription: string;
   published: boolean;
 };
 

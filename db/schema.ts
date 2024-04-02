@@ -11,7 +11,7 @@ import { createId } from '@paralleldrive/cuid2';
 export const books = sqliteTable("books", {
   id: text("id").notNull().primaryKey().$defaultFn(() => createId()),
   title: text("title").notNull(),
-  shortDescription: text("shortDescription"),
+  shortDescription: text("shortDescription").notNull(),
   image: text("image"),
   author: text("author").notNull().references(() => users.id, { onDelete: "cascade" }),
   published: integer("published", { mode: 'boolean'}).notNull().default(false),
