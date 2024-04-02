@@ -66,13 +66,13 @@ export function BookSummary(
         status={bookDetails.published}
         isUserAuthor={isUserAuthor}
       />
-      <div className="mx-auto grid w-full max-w-6xl items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]">
+      <div className="mx-auto flex flex-col-reverse md:grid w-full max-w-6xl items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]">
         <BookNav bookId={bookDetails.id} pages={pages} />
         <div className="grid gap-6">
           <Card>
             <CardHeader>
-              <CardTitle className="text-center">
-                Summary
+              <CardTitle className="text-center md:text-3xl mb-4">
+                ~ Summary ~
               </CardTitle>
               {isUserAuthor && (
                 <AlertDialog open={isImageEditing} onOpenChange={setIsImageEditing}>

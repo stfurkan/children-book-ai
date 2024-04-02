@@ -7,8 +7,8 @@ import { PageType } from '@/types/dbTypes';
 
 export function BookNav({ bookId, pages }: { bookId: string; pages: PageType[] }) {
   return (
-    <nav className="grid gap-4 text-sm text-muted-foreground">
-      <ScrollArea className="h-72 w-48 rounded-md border">
+    <nav className="grid gap-4 text-sm text-muted-foreground w-full">
+      <ScrollArea className="h-72 w-full md:w-48 rounded-md border">
         <div className="p-4">
           <h4 className="mb-4 text-base font-semibold leading-none text-slate-800">Pages</h4>
           <Link

@@ -1,7 +1,6 @@
 import { auth } from "@/auth";
 import { AutherDetailsForm } from "@/components/Forms/AuthorDetailsForm";
 import { getAuthorDetails } from "@/lib/db/author";
-import { decrypt, encrypt } from "@/lib/encryption";
 import { notFound } from "next/navigation";
 
 export default async function UserProfile() {
