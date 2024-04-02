@@ -14,6 +14,7 @@ export async function uploadRemoteImageToR2(remoteImageUrl: string, bucketName: 
     Bucket: bucketName,
     Key: fileName,
     Body: imageBuffer,
+    ContentType: response.headers.get("Content-Type") || undefined,
   };
 
   try {
