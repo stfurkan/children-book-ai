@@ -1,5 +1,25 @@
+import type { Metadata } from "next";
 import { AllBooks } from "@/components/Books/AllBooks";
 import { fetchBooks, totalBookCount } from "@/lib/db/fetchBook";
+
+export const metadata: Metadata = {
+  title: "Books | Children's Book AI",
+  description: "Books is a page where you can see all the books.",
+  openGraph: {
+    type: "website",
+    url: "https://childrensbookai.net/books",
+    title: "Books | Children's Book AI",
+    description: "Books is a page where you can see all the books.",
+    images: [
+      {
+        url: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/book-placeholder.png`,
+        width: 1024,
+        height: 1024,
+        alt: "Books | Children's Book AI",
+      },
+    ],
+  },
+};
 
 type BooksPageProps = {
   searchParams: {

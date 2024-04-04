@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import type { Metadata, ResolvingMetadata } from 'next';
+import type { Metadata } from 'next';
 import { auth } from "@/auth";
 import { fetchBook } from "@/lib/db/fetchBook";
 import { BookSummary } from "@/components/Book/BookSummary";
@@ -15,7 +15,7 @@ type BookPageProps = {
 
 export async function generateMetadata(
   { params: { bookId } }: BookPageProps,
-) {
+): Promise<Metadata> {
   const book = await fetchBook(bookId);
   if (!book) {
     return notFound();
@@ -26,7 +26,22 @@ export async function generateMetadata(
     description: book.book.shortDescription,
     openGraph: {
       images: [
-        book.book.image,
+        {
+          url: book.book.image || `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/book-placeholder.png`,
+          width: 1024,
+          height: 1024,
+          alt: book.book.title,
+        }
+      ],
+    },
+    twitter: {
+      images: [
+        {
+          url: book.book.image || `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/book-placeholder.png`,
+          width: 1024,
+          height: 1024,
+          alt: book.book.title,
+        }
       ],
     },
   };

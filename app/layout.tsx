@@ -6,8 +6,23 @@ import Layout from "@/components/Layout/Layout";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://childrensbookai.net'),
   title: "Children’s Book AI",
-  description: "Generate children's books with AI.",
+  description: "Children’s Book AI is a platform for authors to write and publish children’s books. We use AI to help authors write and publish books faster.",
+  openGraph: {
+    type: "website",
+    url: "https://childrensbookai.net",
+    title: "Children’s Book AI",
+    description: "Children’s Book AI is a platform for authors to write and publish children’s books. We use AI to help authors write and publish books faster.",
+    images: [
+      {
+        url: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/book-placeholder.png`,
+        width: 1024,
+        height: 1024,
+        alt: "Children’s Book AI",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({

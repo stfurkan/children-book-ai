@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { auth } from "@/auth";
 import {
   totalBookCountForUser,
@@ -17,6 +18,29 @@ type UserBooksPageProps = {
     [key: string]: string;
   };
 };
+
+export async function generateMetadata({ params: { userId } }: UserBooksPageProps): Promise<Metadata> {
+  const authorDetails = await getAuthorDetails(userId);
+
+  if (!authorDetails) {
+    return notFound();
+  }
+
+  return {
+    title: `${authorDetails.authorName} | Children's Book AI`,
+    description: `Books by ${authorDetails.authorName}`,
+    openGraph: {
+      images: [
+        {
+          url: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/book-placeholder.png`,
+          width: 1024,
+          height: 1024,
+          alt: `${authorDetails.authorName} | Children's Book AI`,
+        },
+      ],
+    },
+  };
+}
 
 export default async function UserBooksPage({ params: { userId }, searchParams }: UserBooksPageProps) {
   const session = await auth();
