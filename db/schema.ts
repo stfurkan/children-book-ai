@@ -15,6 +15,7 @@ export const books = sqliteTable("books", {
   image: text("image"),
   author: text("author").notNull().references(() => users.id, { onDelete: "cascade" }),
   published: integer("published", { mode: 'boolean'}).notNull().default(false),
+  createdAt: integer("createdAt", { mode: "timestamp" }).notNull(),
 });
 
 export const authorDetails = sqliteTable("author_details", {

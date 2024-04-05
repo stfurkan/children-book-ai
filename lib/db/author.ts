@@ -1,4 +1,5 @@
 "use server";
+import { revalidatePath } from "next/cache";
 import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { authorDetails } from "@/db/schema";
@@ -57,6 +58,8 @@ export async function createAuthorDetails(authorData: AuthorDetails) {
       keyIv: authorData.aiKey ? encryptedKey?.iv : null,
       keyAuthTag: authorData.aiKey ? encryptedKey?.authTag : null,
     }).returning({ id: authorDetails.id});
+
+  revalidatePath('/new-book');
 
   return author[0];
 }

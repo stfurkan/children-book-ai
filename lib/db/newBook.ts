@@ -23,6 +23,7 @@ export async function createBookWithPages(bookData: { [key: string]: string }) {
         shortDescription: bookData.shortSummary,
         author: user.id,
         published: false,
+        createdAt: new Date(Date.now()),
       }).returning({ id: books.id});
 
       bookId = book[0].id;

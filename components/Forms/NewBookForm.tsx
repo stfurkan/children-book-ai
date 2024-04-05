@@ -69,78 +69,90 @@ export function NewBookForm(
       await createBookWithPages(story);
     }
     catch (error: any) {
+      setLoading(false);
       setError(error.message);
     }
-    
-    setLoading(false);
   }
 
   if (loading) {
     return (
-      <div className="flex flex-col space-y-3">
-      <h2 className="font-semibold text-2xl">Loading...</h2>
-      <Skeleton className="h-[125px] w-[250px] rounded-xl" />
-      <div className="space-y-2">
-        <Skeleton className="h-4 w-[250px]" />
-        <Skeleton className="h-4 w-[200px]" />
+      <div className="flex flex-row justify-center">
+        <div className="flex flex-col w-full items-center">
+          <div className="flex flex-col space-y-3">
+            <h2 className="font-semibold text-2xl">
+              Creating your book...
+            </h2>
+            <Skeleton className="h-[125px] w-[250px] rounded-xl" />
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-[250px]" />
+              <Skeleton className="h-4 w-[200px]" />
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
     );
   }
  
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full md:w-2/3 space-y-6">
-        {error && (
-          <span className="inline-block font-semibold text-red-500 pb-1">
-            Error: {error}
-          </span>
-        )}
-        <FormField
-          control={form.control}
-          name="page"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                Total Pages
-              </FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Enter the total page number of your children's book."
-                  type="number"
-                  className="resize-none"
-                  {...field}
-                />
-              </FormControl>
-              <FormDescription>
-                Select a number between 1 and 24.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="story"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Story</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Write the main idea of you children's book in 300 characters or less."
-                  className="resize-none"
-                  {...field}
-                />
-              </FormControl>
-              <FormDescription>
-                Make sure to keep it short and sweet.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Create Book</Button>
-      </form>
-    </Form>
+    <div className="flex flex-row justify-center">
+      <div className="flex flex-col w-full items-center">
+        <h1 className="font-mono font-semibold text-base md:text-2xl mb-4">
+          ~ Create a new book ~
+        </h1>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="w-full md:w-2/3 space-y-6">
+            {error && (
+              <span className="inline-block font-semibold text-red-500 pb-1">
+                Error: {error}
+              </span>
+            )}
+            <FormField
+              control={form.control}
+              name="page"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Total Pages
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Enter the total page number of your children's book."
+                      type="number"
+                      className="resize-none"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Select a number between 1 and 24.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="story"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Story</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Write the main idea of you children's book in 300 characters or less."
+                      className="resize-none"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Make sure to keep it short and sweet.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit">Create Book</Button>
+          </form>
+        </Form>
+      </div>
+    </div>
   );
 }
