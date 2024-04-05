@@ -46,6 +46,7 @@ export default async function UserBooksPage({ params: { userId }, searchParams }
   const session = await auth();
   const pageSize = 9;
   const pageParam = searchParams?.page ? parseInt(searchParams?.page, 10) : undefined;
+  const search = searchParams?.search || '';
   let bookCount;
   let allBooks;
   let totalPages;
@@ -58,23 +59,23 @@ export default async function UserBooksPage({ params: { userId }, searchParams }
   }
 
   if (session?.user.id === userId) {
-    bookCount = (await totalBookCountForCurrentUser(userId)) || 0;
+    bookCount = (await totalBookCountForCurrentUser(userId, search)) || 0;
     totalPages = Math.ceil(bookCount / pageSize);
 
     page = (pageParam && pageParam > 0 && pageParam <= totalPages)
       ? parseInt(searchParams.page, 10)
       : undefined;
 
-    allBooks = await fetchBooksForCurrentUser(userId, page || 1, pageSize);
+    allBooks = await fetchBooksForCurrentUser(userId, page || 1, pageSize, search);
   } else {
-    bookCount = (await totalBookCountForUser(userId)) || 0;
+    bookCount = (await totalBookCountForUser(userId, search)) || 0;
     totalPages = Math.ceil(bookCount / pageSize);
 
     page = (pageParam && pageParam > 0 && pageParam <= totalPages)
       ? parseInt(searchParams.page, 10)
       : undefined;
 
-    allBooks = await fetchBooksForUser(userId, page || 1, pageSize);
+    allBooks = await fetchBooksForUser(userId, page || 1, pageSize, search);
   }
 
   allBooks = allBooks?.map((book) => ({
@@ -87,6 +88,7 @@ export default async function UserBooksPage({ params: { userId }, searchParams }
     <div className="flex flex-row justify-center items-center">
       <div className="flex flex-col w-full items-center">
         <AllBooks
+          totalBooks={bookCount}
           allBooks={allBooks}
           authorDetails={authorDetails}
           totalPages={totalPages}

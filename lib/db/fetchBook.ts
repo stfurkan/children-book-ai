@@ -1,5 +1,5 @@
 "use server";
-import { and, count, desc, eq } from "drizzle-orm";
+import { and, count, desc, eq, like } from "drizzle-orm";
 import { db } from "@/db";
 import { authorDetails, books, pages } from "@/db/schema";
 import { auth } from "@/auth";
@@ -38,12 +38,15 @@ export async function fetchBook(bookId: string) {
   }
 }
 
-export async function totalBookCount() {
+export async function totalBookCount(search: string = '') {
   try {
     const totalBooks = await db
       .select({ count: count() })
       .from(books)
-      .where(eq(books.published, true));
+      .where(and(
+        eq(books.published, true),
+        search ? like(books.title, `%${search}%`) : undefined,
+      ));
 
     return totalBooks[0].count;
   } catch (error) {
@@ -51,7 +54,7 @@ export async function totalBookCount() {
   }
 }
 
-export async function fetchBooks(page: number = 1, pageSize: number = 9) {
+export async function fetchBooks(page: number = 1, pageSize: number = 9, search: string = '') {
   try {
     const allBooks = await db
       .select({
@@ -64,7 +67,10 @@ export async function fetchBooks(page: number = 1, pageSize: number = 9) {
       })
       .from(books)
       .leftJoin(authorDetails, eq(books.author, authorDetails.authorId))
-      .where(eq(books.published, true))
+      .where(and(
+        eq(books.published, true),
+        search ? like(books.title, `%${search}%`) : undefined,
+      ))
       .orderBy(desc(books.createdAt))
       .limit(pageSize)
       .offset((page - 1) * pageSize);
@@ -75,12 +81,16 @@ export async function fetchBooks(page: number = 1, pageSize: number = 9) {
   }
 }
 
-export async function totalBookCountForUser(userId: string) {
+export async function totalBookCountForUser(userId: string, search: string = '') {
   try {
     const totalBooks = await db
       .select({ count: count() })
       .from(books)
-      .where(and(eq(books.author, userId), eq(books.published, true)));
+      .where(and(
+        eq(books.author, userId),
+        eq(books.published, true),
+        search ? like(books.title, `%${search}%`) : undefined,
+      ));
 
     return totalBooks[0].count;
   } catch (error) {
@@ -88,12 +98,16 @@ export async function totalBookCountForUser(userId: string) {
   }
 }
 
-export async function fetchBooksForUser(userId: string, page: number = 1, pageSize: number = 9) {
+export async function fetchBooksForUser(userId: string, page: number = 1, pageSize: number = 9, search: string = '') {
   try {
     const allBooks = await db
       .select()
       .from(books)
-      .where(and(eq(books.author, userId), eq(books.published, true)))
+      .where(and(
+        eq(books.author, userId),
+        eq(books.published, true),
+        search ? like(books.title, `%${search}%`) : undefined,
+      ))
       .orderBy(desc(books.createdAt))
       .limit(pageSize)
       .offset((page - 1) * pageSize);
@@ -104,7 +118,7 @@ export async function fetchBooksForUser(userId: string, page: number = 1, pageSi
   }
 }
 
-export async function totalBookCountForCurrentUser(userId: string) {
+export async function totalBookCountForCurrentUser(userId: string, search: string = '') {
   const session = await auth();
   const user = session?.user;
 
@@ -122,7 +136,10 @@ export async function totalBookCountForCurrentUser(userId: string) {
     const totalBooks = await db
       .select({ count: count() })
       .from(books)
-      .where(eq(books.author, userId));
+      .where(and(
+        eq(books.author, userId),
+        search ? like(books.title, `%${search}%`) : undefined,
+      ));
 
     return totalBooks[0].count;
   } catch (error) {
@@ -130,7 +147,7 @@ export async function totalBookCountForCurrentUser(userId: string) {
   }
 }
 
-export async function fetchBooksForCurrentUser(userId: string, page: number = 1, pageSize: number = 9) {
+export async function fetchBooksForCurrentUser(userId: string, page: number = 1, pageSize: number = 9, search: string = '') {
   const session = await auth();
   const user = session?.user;
 
@@ -148,7 +165,10 @@ export async function fetchBooksForCurrentUser(userId: string, page: number = 1,
     const allBooks = await db
       .select()
       .from(books)
-      .where(eq(books.author, userId))
+      .where(and(
+        eq(books.author, userId),
+        search ? like(books.title, `%${search}%`) : undefined,
+      ))
       .orderBy(desc(books.createdAt))
       .limit(pageSize)
       .offset((page - 1) * pageSize);

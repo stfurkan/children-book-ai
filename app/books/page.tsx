@@ -28,7 +28,8 @@ type BooksPageProps = {
 };
 
 export default async function BooksPage({ searchParams }: BooksPageProps) {
-  const bookCount = (await totalBookCount()) || 0;
+  const search = searchParams?.search || '';
+  const bookCount = (await totalBookCount(search)) || 0;
   const pageSize = 9;
   const totalPages = Math.ceil(bookCount / pageSize);
 
@@ -36,13 +37,18 @@ export default async function BooksPage({ searchParams }: BooksPageProps) {
   const page = (pageParam && pageParam > 0 && pageParam <= totalPages)
     ? parseInt(searchParams.page, 10)
     : undefined;
-    
-  const allBooks = await fetchBooks(page || 1, pageSize);
+  
+  const allBooks = await fetchBooks(page || 1, pageSize, search);
 
   return (
     <div className="flex flex-row justify-center">
       <div className="flex flex-col w-full items-center">
-        <AllBooks allBooks={allBooks} totalPages={totalPages} page={page || 1} />
+        <AllBooks
+          totalBooks={bookCount}
+          allBooks={allBooks}
+          totalPages={totalPages}
+          page={page || 1}
+        />
       </div>
     </div>
   );
