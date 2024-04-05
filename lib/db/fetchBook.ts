@@ -1,5 +1,5 @@
 "use server";
-import { and, count, eq } from "drizzle-orm";
+import { and, count, desc, eq } from "drizzle-orm";
 import { db } from "@/db";
 import { authorDetails, books, pages } from "@/db/schema";
 import { auth } from "@/auth";
@@ -65,6 +65,7 @@ export async function fetchBooks(page: number = 1, pageSize: number = 9) {
       .from(books)
       .leftJoin(authorDetails, eq(books.author, authorDetails.authorId))
       .where(eq(books.published, true))
+      .orderBy(desc(books.createdAt))
       .limit(pageSize)
       .offset((page - 1) * pageSize);
 
@@ -93,6 +94,7 @@ export async function fetchBooksForUser(userId: string, page: number = 1, pageSi
       .select()
       .from(books)
       .where(and(eq(books.author, userId), eq(books.published, true)))
+      .orderBy(desc(books.createdAt))
       .limit(pageSize)
       .offset((page - 1) * pageSize);
 
@@ -147,6 +149,7 @@ export async function fetchBooksForCurrentUser(userId: string, page: number = 1,
       .select()
       .from(books)
       .where(eq(books.author, userId))
+      .orderBy(desc(books.createdAt))
       .limit(pageSize)
       .offset((page - 1) * pageSize);
 
