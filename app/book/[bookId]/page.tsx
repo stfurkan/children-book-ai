@@ -27,7 +27,7 @@ export async function generateMetadata(
     openGraph: {
       images: [
         {
-          url: book.book.image || `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/book-placeholder.png`,
+          url: book.book.image || `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/logo-square.png`,
           width: 1024,
           height: 1024,
           alt: book.book.title,
@@ -37,7 +37,7 @@ export async function generateMetadata(
     twitter: {
       images: [
         {
-          url: book.book.image || `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/book-placeholder.png`,
+          url: book.book.image || `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/logo-square.png`,
           width: 1024,
           height: 1024,
           alt: book.book.title,

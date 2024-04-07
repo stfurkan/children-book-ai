@@ -32,7 +32,7 @@ export async function generateMetadata({ params: { userId } }: UserBooksPageProp
     openGraph: {
       images: [
         {
-          url: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/book-placeholder.png`,
+          url: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/logo-square.png`,
           width: 1024,
           height: 1024,
           alt: `${authorDetails.authorName} | Children's Book AI`,

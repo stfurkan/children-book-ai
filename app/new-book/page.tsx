@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     description: "New Book is a page where authors can create a new book.",
     images: [
       {
-        url: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/book-placeholder.png`,
+        url: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/logo-square.png`,
         width: 1024,
         height: 1024,
         alt: "New Book | Children's Book AI",

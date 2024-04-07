@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     description: "Author Profile is a page where authors can update their details.",
     images: [
       {
-        url: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/book-placeholder.png`,
+        url: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/logo-square.png`,
         width: 1024,
         height: 1024,
         alt: "Author Profile | Children's Book AI",
