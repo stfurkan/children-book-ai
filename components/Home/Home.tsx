@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import Link from "next/link";
 import { Session } from "next-auth";
@@ -25,8 +26,14 @@ export function Home(
   return (
     <div className="container mx-auto px-4">
       {/* Hero Section */}
-      <section className="text-center py-12">
-        <h1 className="font-mono text-3xl font-bold mb-4">Bring Your Children&rsquo;s Stories to Life</h1>
+      <section className="text-center pb-12">
+        <img
+          src={`${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/home-image.png`}
+          alt="Illustration of a child reading a book"
+          className="mx-auto w-3/4 md:w-1/3"
+          loading="lazy"
+        />
+        <h1 className="font-mono text-2xl md:text-3xl font-bold mb-4">Bring Your Children&rsquo;s Stories to Life</h1>
         <p className="text-lg mb-8">Craft unique and personalized children&rsquo;s books with the help of AI.</p>
         {user ? (
           <Link href="/new-book" className="inline-block">
