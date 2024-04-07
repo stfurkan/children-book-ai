@@ -2,9 +2,15 @@
 import { NextResponse } from 'next/server';
 import { auth } from "./auth";
 
-const publicRoutes = ['/', '/books'];
+const publicRoutes = [
+  '/',
+  '/books',
+  '/privacy-policy',
+  '/terms-of-service',
+];
 
 export default auth((req) => {
+  console.log('Middleware: ', req.nextUrl.pathname);
   if (publicRoutes.includes(req.nextUrl.pathname)) {
     return NextResponse.next();
   }
