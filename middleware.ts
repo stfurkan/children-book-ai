@@ -7,6 +7,7 @@ const publicRoutes = [
   '/books',
   '/privacy-policy',
   '/terms-of-service',
+  '/signin',
 ];
 
 export default auth((req) => {

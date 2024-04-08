@@ -3,8 +3,8 @@ import Link from "next/link";
 import { Session } from "next-auth"
 import {
   Book,
-  Github,
   LibraryBig,
+  LogIn,
   LogOut,
   PenLine,
   User,
@@ -21,7 +21,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { signInGitHub, signOutUser } from "@/lib/auth/authHelpers";
+import { signOutUser } from "@/lib/auth/authHelpers";
 
 
 export function Header({ user }: { user?: Session['user']}) {
@@ -89,13 +89,14 @@ export function Header({ user }: { user?: Session['user']}) {
           </DropdownMenuContent>
         </DropdownMenu>
       ) : (
-        <Button
-          variant="outline"
-          onClick={() => signInGitHub()}
-        >
-          <Github className="mr-2" /> <span className="font-semibold">Sign in</span>
-        </Button>)
-      }
+        <Link href="/signin">
+          <Button
+            variant="outline"
+          >
+            <span className="font-semibold">Sign in</span> <LogIn className="ml-2" />
+          </Button>
+        </Link>
+      )}
     </div>
   );
 }

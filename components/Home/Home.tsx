@@ -1,8 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-"use client";
 import Link from "next/link";
 import { Session } from "next-auth";
-import { Github } from "lucide-react";
+import { LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,7 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { signInGitHub } from "@/lib/auth/authHelpers";
 import { BookCardType } from "@/types/dbTypes";
 import { FeaturedBooks } from "./FeaturedBooks";
 
@@ -29,7 +27,7 @@ export function Home(
       <section className="text-center pb-12">
         <img
           src={`${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/home-image.png`}
-          alt="Illustration of a child reading a book"
+          alt="Home page image of children's book AI"
           className="mx-auto w-3/4 md:w-1/3"
           loading="lazy"
         />
@@ -40,9 +38,11 @@ export function Home(
             <Button size="lg">Start Creating Now</Button>
           </Link>
         ) : (
-          <Button size="lg" onClick={() => signInGitHub()}>
-            <Github className="mr-2" /> Sign in to Start
-          </Button>
+          <Link href="/signin">
+            <Button size="lg">
+              Sign in to Start <LogIn className="ml-2" /> 
+            </Button>
+          </Link>
         )}
       </section>
 
