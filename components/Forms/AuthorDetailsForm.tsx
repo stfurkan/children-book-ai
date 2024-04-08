@@ -183,7 +183,16 @@ export function AutherDetailsForm(
               <FormDescription>
                 This is optional, but it will be used to generate content for your book.
                 If you don&rsquo;t want to update it, leave it empty. It will use your existing key.
-                If your key does not work, you cannot generate content.
+                If your key does not work, you cannot generate content. If you don&rsquo;t know how 
+                to get an OpenAI API key, please visit {' '}
+                <a
+                  href="https://platform.openai.com/docs/quickstart"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-slate-700 underline hover:no-underline"
+                >
+                  the OpenAI quick start guide
+                </a>.
               </FormDescription>
               <FormMessage />
             </FormItem>
