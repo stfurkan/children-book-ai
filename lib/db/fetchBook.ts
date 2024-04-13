@@ -63,6 +63,7 @@ export async function fetchBooks(page: number = 1, pageSize: number = 9, search:
         authorId: books.author,
         image: books.image,
         shortDescription: books.shortDescription,
+        published: books.published,
         authorName: authorDetails.authorName,
       })
       .from(books)

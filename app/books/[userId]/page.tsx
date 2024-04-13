@@ -108,6 +108,7 @@ export default async function UserBooksPage({ params: { userId }, searchParams }
           authorDetails={authorDetails}
           totalPages={totalPages}
           page={page || 1}
+          currentUser={session?.user.id === userId}
         />
       </div>
     </div>

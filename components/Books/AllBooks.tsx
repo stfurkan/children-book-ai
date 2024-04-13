@@ -12,12 +12,14 @@ export function AllBooks({
   totalPages,
   page,
   authorDetails,
+  currentUser = false,
 }: {
   totalBooks: number;
   allBooks?: BookCardType[];
   totalPages: number;
   page: number;
   authorDetails?: Omit<AuthorType, 'id' | 'authorId'>;
+  currentUser?: boolean;
 }) {
   return (
     <div className="flex flex-col justify-between items-center">
@@ -36,7 +38,11 @@ export function AllBooks({
       <Separator className="mt-2 mb-4" />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {allBooks && allBooks.length > 0 && allBooks.map((book) => (
-          <BookCard key={book.id} book={book} />
+          <BookCard
+            key={book.id}
+            book={book}
+            currentUser={currentUser}
+          />
         ))}
       </div>
 

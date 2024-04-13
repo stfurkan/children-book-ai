@@ -7,11 +7,14 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  CardFooter,
 } from "@/components/ui/card";
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
 import { useImagePreload } from '@/hooks/useImagePreload';
 import { BookCardType } from '@/types/dbTypes';
 
-export function BookCard({ book }: { book: BookCardType }) {
+export function BookCard({ book, currentUser = false }: { book: BookCardType; currentUser?: boolean;}) {
   const imageSrc = useImagePreload(book.image || '');
 
   return (
@@ -31,6 +34,16 @@ export function BookCard({ book }: { book: BookCardType }) {
           <CardTitle>{book.title}</CardTitle>
           <CardDescription>by {book.authorName}</CardDescription>
         </CardHeader>
+        {currentUser && (
+          <CardFooter className="flex flex-col items-end">
+            <Separator className="my-2" />
+            <Badge
+              variant="outline"
+            >
+              {book.published ? 'Published' : 'Draft'}
+            </Badge>
+          </CardFooter>
+        )}
       </Card>
     </Link>
   );

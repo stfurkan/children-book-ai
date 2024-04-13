@@ -30,4 +30,5 @@ export type BookCardType = {
   image: string | null;
   shortDescription: string | null;
   authorName: string | null;
+  published: boolean;
 };
