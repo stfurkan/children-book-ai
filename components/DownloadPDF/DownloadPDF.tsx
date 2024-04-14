@@ -85,19 +85,21 @@ export function DownloadPDF(
     doc.addPage();
     doc.setFontSize(18);
     doc.text("About the Author", 3, 1, { align: 'center' });
+    doc.setFontSize(14);
+    doc.text(book.author.authorName, 3, 1.5, { align: 'center' });
     doc.setFontSize(12);
 
     // Optionally add the author's image to the left of the bio
     if (book.author.image) {
       const imageSize = 1.5; // Smaller image for the author
-      doc.addImage(book.author.image, 'JPEG', margins.left, 1.5, imageSize, imageSize);
+      doc.addImage(book.author.image, 'JPEG', margins.left, 2, imageSize, imageSize);
       // Adjust the starting point of the bio text
-      doc.text(book.author.bio, margins.left + imageSize + 0.5, 1.6, {
+      doc.text(book.author.bio, margins.left + imageSize + 0.5, 2.1, {
         maxWidth: 6 - margins.left - margins.right - imageSize - 0.5,
         align: 'left'
       });
     } else {
-      doc.text(book.author.bio, margins.left, 1.5, {
+      doc.text(book.author.bio, margins.left, 2, {
         maxWidth: 6 - margins.left - margins.right,
         align: 'left'
       });
