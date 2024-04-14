@@ -54,7 +54,7 @@ export function BookTitle(
   };
 
   return (
-    <div className="mx-auto flex flex-row justify-between items-end w-full max-w-6xl">
+    <div className="mx-auto flex flex-col space-y-2 md:space-y-0 md:flex-row justify-between items-center md:items-end w-full max-w-6xl">
       <div>
         <h1 className="text-2xl md:text-3xl font-semibold">{title}</h1>
         <Link
