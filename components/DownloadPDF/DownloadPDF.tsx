@@ -25,15 +25,33 @@ export function DownloadPDF(
 
     // Initially, check if a cover image exists and handle it
     if (book.book.image) {
-      doc.addImage(book.book.image, 'JPEG', 0, 0, 6, 9); // Cover image fills the whole page
+      doc.addImage(book.book.image, 'JPEG', 1, margins.top, 4, 4); // Cover image fills the whole page
       doc.setFontSize(24); // Larger font for the title
-      doc.setTextColor(255, 255, 255); // Assuming white text, adjust as needed for visibility
-      doc.text(book.book.title, 3, 8.5, { align: 'center' }); // Center title at the bottom of the cover image
-      doc.addPage(); // Ensures first page is not empty and cover doesn't get overwritten
+      // doc.setTextColor(255, 255, 255); // Assuming white text, adjust as needed for visibility
+      doc.text(book.book.title, 3, 5, {
+        maxWidth: 6 - margins.left - margins.right,
+        align: 'center'
+      }); // Center title at the bottom of the cover image
+      doc.setFontSize(18); // Smaller font for the author
+      doc.text(book.author.authorName, 3, 5.5, {
+        maxWidth: 6 - margins.left - margins.right,
+        align: 'center'
+      }); // Center title at the top of the page
     } else {
       doc.setFontSize(24); // Larger font for the title
-      doc.text(book.book.title, 3, 0.75, { align: 'center' }); // Center title at the top of the page
+      doc.text(book.book.title, 3, 2.75, {
+        maxWidth: 6 - margins.left - margins.right,
+        align: 'center'
+      }); // Center title at the top of the page
+      doc.setFontSize(18); // Smaller font for the author
+      doc.text(book.author.authorName, 3, 3.25, {
+        maxWidth: 6 - margins.left - margins.right,
+        align: 'center'
+      }); // Center title at the top of the page
     }
+    doc.setFontSize(12); // Reset font size for content
+    doc.text("This book was created using childrensbookai.net.", 3, 8.75, { align: 'center' });
+    doc.addPage(); // Ensures first page is not empty and cover doesn't get overwritten
 
     // Iterate through book pages
     book.pages.forEach((page, index) => {
@@ -52,7 +70,7 @@ export function DownloadPDF(
 
       // Add text below the image, centered
       doc.setFontSize(12);
-      doc.setTextColor(0, 0, 0); // Reset text color to black for content
+      // doc.setTextColor(0, 0, 0); // Reset text color to black for content
       doc.text(page.content, 3, contentY, {
         maxWidth: 6 - margins.left - margins.right,
         align: 'center'
@@ -65,8 +83,9 @@ export function DownloadPDF(
 
     // Add the back cover with author's bio, centered
     doc.addPage();
-    doc.setFontSize(10);
+    doc.setFontSize(18);
     doc.text("About the Author", 3, 1, { align: 'center' });
+    doc.setFontSize(12);
 
     // Optionally add the author's image to the left of the bio
     if (book.author.image) {
