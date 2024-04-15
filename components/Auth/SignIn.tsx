@@ -1,6 +1,7 @@
 'use client';
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
+import { useTranslations } from 'next-intl';
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,6 +13,20 @@ import {
 import { signInGitHub, signInGoogle } from "@/lib/auth/authHelpers";
 
 export function SignInComponent() {
+  const t = useTranslations('SignIn');
+
+  const termsLink = (
+    <Link href="/terms-of-service" className="text-primary hover:underline">
+      {t('terms')}
+    </Link>
+  );
+
+  const privacyLink = (
+    <Link href="/privacy-policy" className="text-primary hover:underline">
+      {t('privacy')}
+    </Link>
+  );
+
   return (
     <Card className="mx-auto max-w-sm">
       <CardHeader>
@@ -21,9 +36,9 @@ export function SignInComponent() {
           className="mx-auto"
           loading="lazy"
         />
-        <CardTitle className="text-2xl">Sign in</CardTitle>
+        <CardTitle className="text-2xl">{t('title')}</CardTitle>
         <CardDescription>
-          to continue to Children’s Book AI
+          {t('subtitle')}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -32,24 +47,18 @@ export function SignInComponent() {
             className="w-full"
             onClick={() => signInGitHub()}
           >
-            Login with GitHub
+            {t('github')}
           </Button>
           <Button
             variant="outline"
             className="w-full"
             onClick={() => signInGoogle()}
           >
-            Login with Google
+            {t('google')}
           </Button>
         </div>
         <div className="mt-4 text-center text-sm">
-          By signing in, you agree to our{" "}
-          <Link href="/terms-of-service" className="text-primary hover:underline">
-            Terms of Service
-          </Link> and{" "}
-          <Link href="/privacy-policy" className="text-primary hover:underline">
-            Privacy Policy
-          </Link>
+          {t.rich('agreement', { terms: termsLink as any, privacy: privacyLink as any })}
         </div>
       </CardContent>
     </Card>

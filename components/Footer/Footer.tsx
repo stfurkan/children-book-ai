@@ -1,6 +1,9 @@
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 export function Footer() {
+  const t = useTranslations('Footer');
+
   return (
     <div>
       <hr />
@@ -13,13 +16,13 @@ export function Footer() {
             href="/privacy-policy"
             className="hover:underline"
           >
-            Privacy Policy
+            {t('privacy')}
           </Link>
           <Link
             href="/terms-of-service"
             className="ml-4 hover:underline"
           >
-            Terms of Service
+            {t('terms')}
           </Link>
         </div>
       </footer>

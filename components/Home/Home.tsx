@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { Session } from "next-auth";
+import { useTranslations } from 'next-intl';
 import { LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,6 +22,8 @@ export function Home(
     allBooks?: BookCardType[];
   }
 ) {
+  const t = useTranslations('Home');
+
   return (
     <div className="container mx-auto px-4">
       {/* Hero Section */}
@@ -31,16 +34,16 @@ export function Home(
           className="mx-auto w-3/4 md:w-1/3"
           loading="lazy"
         />
-        <h1 className="font-mono text-2xl md:text-3xl font-bold mb-4">Bring Your Children&rsquo;s Stories to Life</h1>
-        <p className="text-lg mb-8">Craft unique and personalized children&rsquo;s books with the help of AI.</p>
+        <h1 className="font-mono text-2xl md:text-3xl font-bold mb-4">{t('title')}</h1>
+        <p className="text-lg mb-8">{t('subtitle')}</p>
         {user ? (
           <Link href="/new-book" className="inline-block">
-            <Button size="lg">Start Creating Now</Button>
+            <Button size="lg">{t('ctaCreate')}</Button>
           </Link>
         ) : (
           <Link href="/signin">
             <Button size="lg">
-              Sign in to Start <LogIn className="ml-2" /> 
+              {t('ctaSignIn')} <LogIn className="ml-2" /> 
             </Button>
           </Link>
         )}
@@ -48,47 +51,20 @@ export function Home(
 
       {/* How It Works Section */}
       <section className="py-12">
-        <h2 className="font-mono text-2xl md:text-3xl font-bold text-center mb-8">~ How It Works ~</h2>
+        <h2 className="font-mono text-2xl md:text-3xl font-bold text-center mb-8">~ {t('howItWorks.title')} ~</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Step 1 */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Write Your Adventure</CardTitle>
-            </CardHeader>
-            <CardContent>
-              Give us your story idea, and our AI will craft a unique and personalized children&rsquo;s book.
-            </CardContent>
-          </Card>
-
-          {/* Step 2 */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Personalize Your Story</CardTitle>
-            </CardHeader>
-            <CardContent>
-              Add characters, names, and special messages to make your story truly one-of-a-kind.
-            </CardContent>
-          </Card>
-
-          {/* Step 3 */}
-          <Card>
-          <CardHeader>
-            <CardTitle>Bring It to Life</CardTitle>
-          </CardHeader>
-            <CardContent>
-              Watch as our AI illustrates your story. Customize further with our intuitive editing tools.
-            </CardContent>
-          </Card>
-
-          {/* Step 4 */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Share the Magic</CardTitle>
-            </CardHeader>
-            <CardContent>
-              Download your story, print it, or share it digitally. Create moments that last a lifetime.
-            </CardContent>
-          </Card>
+          {
+            t.raw('howItWorks.steps').map((step: { title: string; description: string; }, index: number) => (
+              <Card key={index}>
+                <CardHeader>
+                  <CardTitle>{step.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {step.description}
+                </CardContent>
+              </Card>
+            ))
+          }
         </div>
       </section>
 

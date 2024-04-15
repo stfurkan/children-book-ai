@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslations } from 'next-intl';
 import {
     Avatar,
     AvatarFallback,
@@ -8,10 +9,12 @@ import { Separator } from '@/components/ui/separator';
 import { AuthorType } from '@/types/dbTypes';
 
 export function AuthorDetails({ authorDetails }: { authorDetails: Omit<AuthorType, 'id' | 'authorId'> }) {
+  const t = useTranslations('AllBooks');
+
   return (
     <div className="my-8 p-4 border border-gray-200 rounded-lg shadow-sm w-full">
       <h1 className="font-mono font-semibold text-xl mb-2 text-center">
-        ~ Author ~
+        ~ {t('AuthorDetails.author')} ~
       </h1>
       <Separator />
       <div className="flex items-center space-x-6 mt-2">

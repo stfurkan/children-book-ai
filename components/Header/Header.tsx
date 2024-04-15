@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { Session } from "next-auth"
+import { useTranslations } from 'next-intl';
 import {
   Book,
   LibraryBig,
@@ -25,6 +26,8 @@ import { signOutUser } from "@/lib/auth/authHelpers";
 
 
 export function Header({ user }: { user?: Session['user']}) {
+  const t = useTranslations('Header');
+
   return (
     <div className="flex justify-between items-center mx-2 sm:mx-8">
       <div className="flex flex-row items-center space-x-2 sm:space-x-8">
@@ -33,7 +36,7 @@ export function Header({ user }: { user?: Session['user']}) {
         </Link>
         <Link href="/books" className="group">
           <Button variant="unset" className="group-hover:underline group-hover:border rounded">
-            <Book className="mr-2" /> Browse Books 
+            <Book className="mr-2" /> {t('browseBooks')} 
           </Button>
       </Link>
       </div>
@@ -49,14 +52,14 @@ export function Header({ user }: { user?: Session['user']}) {
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56">
-            <DropdownMenuLabel>Menu</DropdownMenuLabel>
+            <DropdownMenuLabel>{t('menu')}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <Link href="/profile">
                 <DropdownMenuItem
                   className="hover:cursor-pointer"
                 >
-                  Profile
+                  {t('profile')}
                   <DropdownMenuShortcut><User className="h-4 w-4" /></DropdownMenuShortcut>
                 </DropdownMenuItem>
               </Link>
@@ -64,7 +67,7 @@ export function Header({ user }: { user?: Session['user']}) {
                 <DropdownMenuItem
                   className="hover:cursor-pointer"
                 >
-                  My Books
+                  {t('myBooks')}
                   <DropdownMenuShortcut><LibraryBig className="h-4 w-4" /></DropdownMenuShortcut>
                 </DropdownMenuItem>
               </Link>
@@ -74,7 +77,7 @@ export function Header({ user }: { user?: Session['user']}) {
                 <DropdownMenuItem
                   className="hover:cursor-pointer"
                 >
-                  Create New Book
+                  {t('newBook')}
                   <DropdownMenuShortcut><PenLine className="h-4 w-4" /></DropdownMenuShortcut>
                 </DropdownMenuItem>
               </Link>
@@ -83,7 +86,7 @@ export function Header({ user }: { user?: Session['user']}) {
               className="hover:cursor-pointer"
               onClick={() => signOutUser()}
             >
-              Log out
+              {t('signOut')}
               <DropdownMenuShortcut><LogOut className="h-4 w-4" /></DropdownMenuShortcut>
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -93,7 +96,7 @@ export function Header({ user }: { user?: Session['user']}) {
           <Button
             variant="outline"
           >
-            <span className="font-semibold">Sign in</span> <LogIn className="ml-2" />
+            <span className="font-semibold">{t('signIn')}</span> <LogIn className="ml-2" />
           </Button>
         </Link>
       )}

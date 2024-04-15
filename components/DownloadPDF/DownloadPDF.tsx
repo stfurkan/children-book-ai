@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { jsPDF } from "jspdf";
+import { useTranslations } from 'next-intl';
 import { FileDown } from "lucide-react";
 import { AuthorType, BookType, PageType } from '@/types/dbTypes';
 import { Button } from '@/components/ui/button';
@@ -22,6 +23,8 @@ export function DownloadPDF(
     };
   }
 ) {
+  const t = useTranslations('BookTitle');
+
   const [isLoading, setIsLoading] = useState(false);
 
   const generatePDF = () => {
@@ -126,16 +129,16 @@ export function DownloadPDF(
   return (
     <>
       <Button onClick={() => generatePDF()}>
-        Download Book <FileDown className="ml-2 w-5 h-5" />
+        {t('DownloadPDF.button')} <FileDown className="ml-2 w-5 h-5" />
       </Button>
       <AlertDialog open={isLoading}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              Generating Book PDF
+              {t('DownloadPDF.alert.title')}
             </AlertDialogTitle>
             <AlertDialogDescription>
-              Please wait while we generate the book PDF for you...
+              {t('DownloadPDF.alert.description')}
             </AlertDialogDescription>
           </AlertDialogHeader>
         </AlertDialogContent>

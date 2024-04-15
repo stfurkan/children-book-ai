@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { auth } from "@/auth";
 import {
   totalBookCountForUser,
@@ -15,25 +16,27 @@ import { Button } from "@/components/ui/button";
 type UserBooksPageProps = {
   params: {
     userId: string;
+    locale: string;
   };
   searchParams: {
     [key: string]: string;
   };
 };
 
-export async function generateMetadata({ params: { userId } }: UserBooksPageProps): Promise<Metadata> {
+export async function generateMetadata({ params: { userId, locale } }: UserBooksPageProps): Promise<Metadata> {
+  const t = await getTranslations({locale, namespace: 'Metadata'});
   const authorDetails = await getAuthorDetails(userId);
 
   return {
-    title: `${authorDetails.authorName} | Children's Book AI`,
-    description: `Books by ${authorDetails.authorName}`,
+    title: t('authorBooks.title', { authorName: authorDetails.authorName }),
+    description: t('authorBooks.description', { authorName: authorDetails.authorName }),
     openGraph: {
       images: [
         {
           url: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/logo-square.png`,
           width: 1024,
           height: 1024,
-          alt: `${authorDetails.authorName} | Children's Book AI`,
+          alt: t('authorBooks.title', { authorName: authorDetails.authorName }),
         },
       ],
     },

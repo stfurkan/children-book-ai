@@ -3,6 +3,7 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useTranslations } from 'next-intl';
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -18,32 +19,34 @@ import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { createBookWithPages } from "@/lib/db/newBook";
 import { createNewBook } from "@/lib/ai/newBook";
-
-const FormSchema = z.object({
-  page: z
-    .coerce.number()
-    .int({ 
-      message: "Page must be an integer.",
-    })
-    .min(1, {
-      message: "Page must be at least 1.",
-    })
-    .max(24, {
-      message: "Page must not be longer than 24.",
-    }),
-  story: z
-    .string()
-    .min(10, {
-      message: "Story must be at least 10 characters.",
-    })
-    .max(300, {
-      message: "Story must not be longer than 300 characters.",
-    }),
-});
  
 export function NewBookForm(
   { setStory }: { setStory?: React.Dispatch<React.SetStateAction<{}>> }
 ) {
+  const t = useTranslations('NewBook');
+
+  const FormSchema = z.object({
+    page: z
+      .coerce.number()
+      .int({ 
+        message: t('form.page.typeError'),
+      })
+      .min(1, {
+        message: t('form.page.minError'),
+      })
+      .max(24, {
+        message: t('form.page.maxError'),
+      }),
+    story: z
+      .string()
+      .min(10, {
+        message: t('form.story.minError'),
+      })
+      .max(300, {
+        message: t('form.story.maxError'),
+      }),
+  });
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -61,7 +64,7 @@ export function NewBookForm(
         story: data.story
       });
 
-      if (!results.story) throw new Error("Failed to create a new book.");
+      if (!results.story) throw new Error(t('genericError'));
   
       const story = JSON.parse(results.story);
       if (setStory) setStory(story);
@@ -80,7 +83,7 @@ export function NewBookForm(
         <div className="flex flex-col w-full items-center">
           <div className="flex flex-col space-y-3">
             <h2 className="font-semibold text-2xl">
-              Creating your book...
+              {t('loading')}
             </h2>
             <Skeleton className="h-[125px] w-[250px] rounded-xl" />
             <div className="space-y-2">
@@ -97,13 +100,13 @@ export function NewBookForm(
     <div className="flex flex-row justify-center">
       <div className="flex flex-col w-full items-center">
         <h1 className="font-mono font-semibold text-base md:text-2xl mb-4">
-          ~ Create a new book ~
+          ~ {t('title')} ~
         </h1>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="w-full md:w-2/3 space-y-6">
             {error && (
               <span className="inline-block font-semibold text-red-500 pb-1">
-                Error: {error}
+                {t('error')}: {error}
               </span>
             )}
             <FormField
@@ -112,18 +115,18 @@ export function NewBookForm(
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                    Total Pages
+                    {t('form.page.label')}
                   </FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Enter the total page number of your children's book."
+                      placeholder={t('form.page.placeholder')}
                       type="number"
                       className="resize-none"
                       {...field}
                     />
                   </FormControl>
                   <FormDescription>
-                    Select a number between 1 and 24.
+                    {t('form.page.description')}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -134,22 +137,22 @@ export function NewBookForm(
               name="story"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Story</FormLabel>
+                  <FormLabel>{t('form.story.label')}</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Write the main idea of you children's book in 300 characters or less."
+                      placeholder={t('form.story.placeholder')}
                       className="resize-none"
                       {...field}
                     />
                   </FormControl>
                   <FormDescription>
-                    Make sure to keep it short and sweet.
+                    {t('form.story.description')}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit">Create Book</Button>
+            <Button type="submit">{t('create')}</Button>
           </form>
         </Form>
       </div>

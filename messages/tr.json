@@ -1,0 +1,208 @@
+{
+  "Metadata": {
+    "home": {
+      "title": "Children’s Book AI",
+      "description": "Children’s Book AI, yazarların çocuk kitapları yazmalarını ve yayımlamalarını sağlayan bir platformdur. Yazarların kitaplarını daha hızlı yazıp yayımlamaları için yapay zeka kullanıyoruz.",
+      "keywords": "çocuk kitabı, AI, yapay zeka, kişiselleştirilmiş kitap, masal kitabı, çocuk hikayesi"
+    },
+    "book": {
+      "title": "{bookTitle} | Children's Book AI"
+    },
+    "books": {
+      "title": "Kitaplar | Children's Book AI",
+      "description": "Dünyanın dört bir yanından yazarların yazdığı çocuk kitaplarına göz atın ve okuyun."
+    },
+    "authorBooks": {
+      "title": "{authorName} | Children's Book AI",
+      "description": "{authorName} tarafından yazılmış çocuk kitaplarını inceleyin ve okuyun."
+    },
+    "newBook": {
+      "title": "Yeni Kitap Oluştur | Children's Book AI",
+      "description": "Yapay zeka yardımıyla yeni bir çocuk kitabı oluşturun."
+    },
+    "privacy": {
+      "title": "Gizlilik Politikası | Children's Book AI",
+      "description": "Children’s Book AI Gizlilik Politikası"
+    },
+    "profile": {
+      "title": "Yazar Profili | Children's Book AI",
+      "description": "Children’s Book AI üzerinde yazar profilinizi güncelleyin."
+    },
+    "signIn": {
+      "title": "Giriş Yap | Children's Book AI",
+      "description": "Çocuk kitabı oluşturmaya başlamak için Children’s Book AI'a giriş yapın."
+    },
+    "terms": {
+      "title": "Kullanım Koşulları | Children's Book AI",
+      "description": "Children’s Book AI Kullanım Koşulları"
+    }
+  },
+  "Header": {
+    "browseBooks": "Kitaplara Göz At",
+    "signIn": "Giriş Yap",
+    "menu": "Menü",
+    "profile": "Profil",
+    "myBooks": "Kitaplarım",
+    "newBook": "Yeni Kitap Oluştur",
+    "signOut": "Çıkış Yap"
+  },
+  "Footer": {
+    "privacy": "Gizlilik Politikası",
+    "terms": "Kullanım Koşulları"
+  },
+  "Pagination": {
+    "previous": "Önceki",
+    "next": "Sonraki"
+  },
+  "Loading": {
+    "loading": "Yükleniyor..."
+  },
+  "Home": {
+    "title": "Çocuk Hikayelerinizi Hayata Geçirin",
+    "subtitle": "Yapay zeka yardımıyla eşsiz ve kişiselleştirilmiş çocuk kitapları oluşturun.",
+    "ctaSignIn": "Başlamak İçin Giriş Yapın",
+    "ctaCreate": "Hemen Oluşturmaya Başlayın",
+    "howItWorks": {
+      "title": "Nasıl Çalışır",
+      "steps": [
+        {
+          "title": "Maceralarınızı Yazın",
+          "description": "Bize hikaye fikrinizi verin, yapay zekamız eşsiz ve kişiselleştirilmiş bir çocuk kitabı yaratsın."
+        },
+        {
+          "title": "Hikayenizi Kişiselleştirin",
+          "description": "Hikayenizi gerçekten benzersiz kılmak için karakterler, isimler ve özel mesajlar ekleyin."
+        },
+        {
+          "title": "Hayata Geçirin",
+          "description": "Hikayenizin yapay zeka tarafından nasıl resimlendirildiğini izleyin. İntuitif düzenleme araçlarımızla daha da özelleştirin."
+        },
+        {
+          "title": "Sihri Paylaşın",
+          "description": "Hikayenizi indirin, yazdırın veya dijital olarak paylaşın. Bir ömür sürecek anlar oluşturun."
+        }
+      ]
+    },
+    "featuredBooks": "Öne Çıkan Kitaplar"
+  },
+  "SignIn": {
+    "title": "Giriş Yap",
+    "subtitle": "Children’s Book AI ile hikayelerinizi oluşturmak için giriş yapın",
+    "google": "Google ile Giriş Yap",
+    "github": "GitHub ile Giriş Yap",
+    "agreement": "Giriş yaparak, {terms} ve {privacy} kurallarını kabul etmiş olursunuz.",
+    "privacy": "Gizlilik Politikası",
+    "terms": "Kullanım Koşulları"
+  },
+  "AllBooks": {
+    "books": "Kitaplar",
+    "totalBooks": "{count, plural, =0 {Kitap bulunamadı} one {1 kitap bulundu} other {# kitap bulundu}}",
+    "notFound": "Kitap bulunamadı",
+    "AuthorDetails": {
+      "author": "Yazar"
+    },
+    "BookSearch": {
+      "clearSearch": "Aramayı Temizle",
+      "searchPlaceholder": "Kitap ara..."
+    }
+  },
+  "BookTitle": {
+    "author": "{author}",
+    "DownloadPDF": {
+      "button": "Kitabı İndir",
+      "alert": {
+        "title": "Kitap Oluşturuluyor",
+        "description": "Kitabınız indirilmek üzere hazırlanıyor. Lütfen biraz bekleyin."
+      }
+    },
+    "bookStatus": {
+      "title": "Kitap Durumu",
+      "draft": "Taslak",
+      "published": "Yayımlandı"
+    }
+  },
+  "BookNav": {
+    "content": "İçerik",
+    "summary": "Özet",
+    "page": "Sayfa {page}"
+  },
+  "BookPage": {
+    "summary": "Özet",
+    "changeImage": "Görseli Değiştir",
+    "createNewImage": "Yeni Görsel Oluştur",
+    "imageError": "Görsel açıklaması boş olamaz.",
+    "imageLoading": "Görsel işleniyor. Lütfen bekleyin...",
+    "imageLabel": "Görseli tanımlayın",
+    "cancel": "İptal",
+    "update": "Güncelle",
+    "create": "Oluştur",
+    "startReading": "Okumaya Başla",
+    "edit": "Düzenle",
+    "updateSummary": "Kitap özetini güncelle",
+    "summaryError": "Kitap özeti boş olamaz.",
+    "pagination": "Sayfa {page} / {total}",
+    "updateContent": "Sayfa içeriğini güncelle",
+    "contentError": "Sayfa içeriği boş olamaz."
+  },
+  "AuthorProfile": {
+    "title": "Yazar Profili",
+    "loading": "Yükleniyor...",
+    "form": {
+      "name": {
+        "label": "Yazar Adı",
+        "placeholder": "Adınızı girin",
+        "description": "Adınız kitabınızda gösterilecektir.",
+        "minError": "Ad en az 5 karakter olmalıdır.",
+        "maxError": "Ad 150 karakterden uzun olmamalıdır."
+      },
+      "bio": {
+        "label": "Yazar Biyografisi",
+        "placeholder": "Biyografinizi girin",
+        "description": "Kendiniz hakkında kısa bir açıklama.",
+        "minError": "Biyografi en az 10 karakter olmalıdır.",
+        "maxError": "Biyografi 300 karakterden uzun olmamalıdır."
+      },
+      "aiKey": {
+        "label": "OpenAI API Anahtarınız",
+        "placeholder": "OpenAI API anahtarınızı girin",
+        "description": "Bu alan isteğe bağlıdır, fakat kitabınız için içerik oluşturulmasında kullanılır. Güncellemek istemiyorsanız boş bırakabilirsiniz; mevcut anahtarınız kullanılmaya devam edecektir. Anahtarınız çalışmıyorsa içerik oluşturulamaz. OpenAI API anahtarınızı nasıl alacağınızdan emin değilseniz, lütfen {openAIDoc}nu ziyaret edin."
+      }
+    },
+    "openAILink": "OpenAI hızlı başlangıç kılavuzu",
+    "save": "Değişiklikleri Kaydet",
+    "toast": {
+      "created": "Yazar detayları kaydedildi!",
+      "updated": "Yazar detayları güncellendi!",
+      "description": "Yazar detaylarınız başarıyla kaydedildi."
+    }
+  },
+  "NewBook": {
+    "title": "Yeni Kitap Oluştur",
+    "loading": "Kitabınız oluşturuluyor...",
+    "error": "Hata",
+    "genericError": "Yeni kitap oluşturulamadı. Lütfen tekrar deneyin.",
+    "form": {
+      "page": {
+        "label": "Toplam Sayfa Sayısı",
+        "placeholder": "Çocuk kitabınızın toplam sayfa sayısını girin.",
+        "description": "1 ile 24 arasında bir sayı seçin.",
+        "typeError": "Sayfa tam sayı olmalıdır.",
+        "minError": "Sayfa sayısı en az 1 olmalıdır.",
+        "maxError": "Sayfa sayısı 24'ten fazla olmamalıdır."
+      },
+      "story": {
+        "label": "Hikaye",
+        "placeholder": "Çocuk kitabınızın ana fikrini 300 karakter veya daha az bir şekilde yazın.",
+        "description": "Kısa ve öz olmasına dikkat edin.",
+        "minError": "Hikaye fikri en az 10 karakter olmalıdır.",
+        "maxError": "Hikaye fikri 300 karakterden uzun olmamalıdır."
+      }
+    },
+    "create": "Kitap Oluştur"
+  },
+  "BookCard": {
+    "author": "{author}",
+    "draft": "Taslak",
+    "published": "Yayımlandı"
+  }
+}

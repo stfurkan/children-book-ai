@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -39,6 +40,8 @@ export function BookTitle(
     isUserAuthor?: boolean;
   }
 ) {
+  const t = useTranslations('BookTitle');
+
   const router = useRouter();
   
   const setBookStatus = async (bookStatus: string) => {
@@ -61,7 +64,7 @@ export function BookTitle(
           href={`/books/${authorId}`}
           className="text-lg font-mono hover:underline"
         >
-          by {author}
+          {t('author', { author })}
         </Link>
       </div>
       
@@ -69,7 +72,7 @@ export function BookTitle(
         <DownloadPDF book={book} />
         {isUserAuthor && (
           <div className="flex flex-row justify-end items-center mt-2">
-            <span className="font-semibold mr-1">Book Status:</span>
+            <span className="font-semibold mr-1">{t('bookStatus.title')}:</span>
             
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -81,19 +84,19 @@ export function BookTitle(
                     variant="outline"
                     className="hover:bg-slate-100 cursor-pointer"
                   >
-                    {status ? 'Published' : 'Draft'}
+                    {status ? t('bookStatus.published') : t('bookStatus.draft')}
                   </Badge>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56">
-                <DropdownMenuLabel>Book Status</DropdownMenuLabel>
+                <DropdownMenuLabel>{t('bookStatus.title')}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuRadioGroup
                   value={status ? 'published' : 'draft'}
                   onValueChange={setBookStatus}
                 >
-                  <DropdownMenuRadioItem value="draft" className="cursor-pointer">Draft</DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="published" className="cursor-pointer">Published</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="draft" className="cursor-pointer">{t('bookStatus.draft')}</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="published" className="cursor-pointer">{t('bookStatus.published')}</DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>
               </DropdownMenuContent>
             </DropdownMenu>

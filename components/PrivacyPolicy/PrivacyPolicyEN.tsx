@@ -1,26 +1,4 @@
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  metadataBase: new URL('https://childrensbookai.net'),
-  title: "Privacy Policy | Children’s Book AI",
-  description: "Privacy Policy for Children’s Book AI.",
-  openGraph: {
-    type: "website",
-    url: "https://childrensbookai.net",
-    title: "Privacy Policy | Children’s Book AI",
-    description: "Privacy Policy for Children’s Book AI.",
-    images: [
-      {
-        url: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/logo-square.png`,
-        width: 1024,
-        height: 1024,
-        alt: "Children’s Book AI",
-      },
-    ],
-  },
-};
-
-export default function PrivacyPolicy() {
+export function PrivacyPolicyEN() {
   return (
     <div className="flex flex-col items-center sm:mx-24 space-y-2">
       <h1 className="font-bold text-3xl">Privacy Policy</h1>

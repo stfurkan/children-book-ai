@@ -1,28 +1,35 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { auth } from "@/auth";
 import { NewBookForm } from "@/components/Forms/NewBookForm";
 import { getAuthorDetails } from "@/lib/db/author";
 import { Button } from "@/components/ui/button";
 
-export const metadata: Metadata = {
-  title: "New Book | Children's Book AI",
-  description: "New Book is a page where authors can create a new book.",
-  openGraph: {
-    type: "website",
-    url: "https://childrensbookai.net/new-book",
-    title: "New Book | Children's Book AI",
-    description: "New Book is a page where authors can create a new book.",
-    images: [
-      {
-        url: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/logo-square.png`,
-        width: 1024,
-        height: 1024,
-        alt: "New Book | Children's Book AI",
-      },
-    ],
-  },
-};
+export async function generateMetadata(
+  { params: { locale } }: { params: { locale: string } }
+): Promise<Metadata> {
+  const t = await getTranslations({locale, namespace: 'Metadata'});
+
+  return {
+    title: t('newBook.title'),
+    description: t('newBook.description'),
+    openGraph: {
+      type: "website",
+      url: "https://childrensbookai.net/new-book",
+      title: t('newBook.title'),
+      description: t('newBook.description'),
+      images: [
+        {
+          url: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/logo-square.png`,
+          width: 1024,
+          height: 1024,
+          alt: t('newBook.title'),
+        },
+      ],
+    },
+  };
+}
 
 export default async function NewBookPage() {
   const session = await auth();

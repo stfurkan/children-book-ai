@@ -1,4 +1,7 @@
 "use client";
+import { useRouter, useSearchParams } from "next/navigation";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useTranslations } from 'next-intl';
 import {
   Pagination,
   PaginationContent,
@@ -6,8 +9,6 @@ import {
   PaginationLink,
 } from "@/components/ui/pagination";
 import { Button } from "@/components/ui/button";
-import { useRouter, useSearchParams } from "next/navigation";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export function PaginationComponent(
   {
@@ -18,6 +19,8 @@ export function PaginationComponent(
     currentPage: number;
   }
 ) {
+  const t = useTranslations('Pagination');
+
   const router = useRouter();
   const searchParams = useSearchParams();
   
@@ -76,7 +79,7 @@ export function PaginationComponent(
           className="group"
         >
           <ChevronLeft className="group-hover:-translate-x-1 transition-all duration-300 delay-150" />{" "}
-          Previous
+          {t('previous')}
         </Button>
         {generatePaginationLinks()}
         <Button
@@ -85,7 +88,7 @@ export function PaginationComponent(
           onClick={() => changePage(currentPage + 1)}
           className="group"
         >
-          Next{" "}
+          {t('next')} {" "}
           <ChevronRight className="group-hover:translate-x-1 transition-all duration-300 delay-150" />
         </Button>
       </PaginationContent>

@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Session } from 'next-auth';
+import { useTranslations } from 'next-intl';
 import {
   Card,
   CardContent,
@@ -42,6 +43,8 @@ export function BookSummary(
     user?: Session['user'];
   }
 ) {
+  const t = useTranslations('BookPage');
+
   const router = useRouter();
   const { author, book: bookDetails, pages } = book;
   const [isContentEditing, setIsContentEditing] = useState(false);
@@ -73,22 +76,22 @@ export function BookSummary(
           <Card>
             <CardHeader>
               <CardTitle className="text-center md:text-3xl mb-4">
-                ~ Summary ~
+                ~ {t('summary')} ~
               </CardTitle>
               {isUserAuthor && (
                 <AlertDialog open={isImageEditing} onOpenChange={setIsImageEditing}>
                   <AlertDialogTrigger asChild>
                     <Button>
-                      {bookDetails.image ? 'Change Image' : 'Add Image'}
+                      {bookDetails.image ? t('changeImage') : t('createNewImage')}
                     </Button>
                   </AlertDialogTrigger>
                   <AlertDialogContent>
                     <AlertDialogHeader>
-                      <AlertDialogTitle>{bookDetails.image ? 'Change image' : 'Create new image'}</AlertDialogTitle>
+                      <AlertDialogTitle>{bookDetails.image ? t('changeImage') : t('createNewImage')}</AlertDialogTitle>
                       <AlertDialogDescription>
                         {isEditError && (
                           <span className="inline-block font-semibold text-red-500 pb-1">
-                            Image description can not be empty.
+                            {t('imageError')}
                           </span>
                         )}
                         {error && (
@@ -98,12 +101,12 @@ export function BookSummary(
                         )}
                         {isEditLoading && (
                           <span className="inline-block font-semibold text-blue-500 pb-1">
-                            Image is processing. Please wait...
+                            {t('imageLoading')}
                           </span>
                         )}
                         <span className="grid w-full gap-1.5">
                           <Label htmlFor="image-description">
-                            Describe the image
+                            {t('imageLabel')}
                           </Label>
                           <Textarea
                             id="image-description"
@@ -123,7 +126,7 @@ export function BookSummary(
                         }}
                         disabled={isEditLoading}
                       >
-                        Cancel
+                        {t('cancel')}
                       </AlertDialogCancel>
                       <AlertDialogAction
                         onClick={async (e) => {
@@ -158,7 +161,7 @@ export function BookSummary(
                         }}
                         disabled={isEditLoading}
                       >
-                        {bookDetails.image ? 'Update' : 'Create'}
+                        {bookDetails.image ? t('update') : t('create')}
                       </AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>
@@ -185,7 +188,7 @@ export function BookSummary(
                 <div className="">
                   <Link href={`/book/${bookDetails.id}/read`}>
                     <Button>
-                      Start Reading
+                      {t('startReading')}
                     </Button>
                   </Link>
                 </div>
@@ -193,18 +196,18 @@ export function BookSummary(
                   <AlertDialog open={isContentEditing} onOpenChange={setIsContentEditing}>
                     <AlertDialogTrigger asChild>
                       <Button>
-                        Edit
+                        {t('edit')}
                       </Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                       <AlertDialogHeader>
                         <AlertDialogTitle>
-                          Update book summary
+                          {t('updateSummary')}
                         </AlertDialogTitle>
                         <AlertDialogDescription>
                           {isEditError && (
                             <span className="inline-block font-semibold text-red-500 pb-1">
-                              Book summary can not be empty.
+                              {t('summaryError')}
                             </span>
                           )}
                           <Textarea
@@ -221,7 +224,7 @@ export function BookSummary(
                             setIsEditError(false);
                           }}
                         >
-                          Cancel
+                          {t('cancel')}
                         </AlertDialogCancel>
                         <AlertDialogAction
                           onClick={async (e) => {
@@ -246,7 +249,7 @@ export function BookSummary(
                             router.refresh();
                           }}
                         >
-                          Update
+                          {t('update')}
                         </AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>

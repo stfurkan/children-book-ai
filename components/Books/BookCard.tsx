@@ -2,6 +2,7 @@
 "use client";
 import React from 'react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import {
   Card,
   CardDescription,
@@ -15,6 +16,8 @@ import { useImagePreload } from '@/hooks/useImagePreload';
 import { BookCardType } from '@/types/dbTypes';
 
 export function BookCard({ book, currentUser = false }: { book: BookCardType; currentUser?: boolean;}) {
+  const t = useTranslations('BookCard');
+
   const imageSrc = useImagePreload(book.image || '');
 
   return (
@@ -32,7 +35,7 @@ export function BookCard({ book, currentUser = false }: { book: BookCardType; cu
             />
           </div>
           <CardTitle>{book.title}</CardTitle>
-          <CardDescription>by {book.authorName}</CardDescription>
+          <CardDescription>{t('author', { author: book.authorName })}</CardDescription>
         </CardHeader>
         {currentUser && (
           <CardFooter className="flex flex-col items-end">
@@ -40,7 +43,7 @@ export function BookCard({ book, currentUser = false }: { book: BookCardType; cu
             <Badge
               variant="outline"
             >
-              {book.published ? 'Published' : 'Draft'}
+              {book.published ? t('published') : t('draft')}
             </Badge>
           </CardFooter>
         )}

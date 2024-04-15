@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Session } from 'next-auth';
+import { useTranslations } from 'next-intl';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import {
   Card,
@@ -43,6 +44,8 @@ export function BookContent(
     page?: number;
   }
 ) {
+  const t = useTranslations('BookPage');
+
   const router = useRouter();
   const { author, book: bookDetails, pages } = book;
   const [currentPage, setCurrentPage] = useState(page ? pages[page - 1] : pages[0]);
@@ -96,18 +99,18 @@ export function BookContent(
                 <AlertDialog open={isImageEditing} onOpenChange={setIsImageEditing}>
                   <AlertDialogTrigger asChild>
                     <Button>
-                      {currentPage.image ? 'Change Image' : 'Add Image'}
+                      {currentPage.image ? t('changeImage') : t('createNewImage')}
                     </Button>
                   </AlertDialogTrigger>
                   <AlertDialogContent>
                     <AlertDialogHeader>
                       <AlertDialogTitle>
-                        {currentPage.image ? 'Change image' : 'Create new image'}
+                        {currentPage.image ? t('changeImage') : t('createNewImage')}
                       </AlertDialogTitle>
                       <AlertDialogDescription>
                         {isEditError && (
                           <span className="inline-block font-semibold text-red-500 pb-1">
-                            Image description can not be empty.
+                            {t('imageError')}
                           </span>
                         )}
                         {error && (
@@ -117,12 +120,12 @@ export function BookContent(
                         )}
                         {isEditLoading && (
                           <span className="inline-block font-semibold text-blue-500 pb-1">
-                            Image is processing. Please wait...
+                            {t('imageLoading')}
                           </span>
                         )}
                         <span className="grid w-full gap-1.5">
                           <Label htmlFor="image-description">
-                            Describe the image
+                            {t('imageLabel')}
                           </Label>
                           <Textarea
                             id="image-description"
@@ -141,7 +144,7 @@ export function BookContent(
                         }}
                         disabled={isEditLoading}
                       >
-                        Cancel
+                        {t('cancel')}
                       </AlertDialogCancel>
                       <AlertDialogAction
                         onClick={async (e) => {
@@ -177,7 +180,7 @@ export function BookContent(
                         }}
                         disabled={isEditLoading}
                       >
-                        {currentPage.image ? 'Update' : 'Create'}
+                        {currentPage.image ? t('update') : t('create')}
                       </AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>
@@ -217,7 +220,7 @@ export function BookContent(
                     <ChevronLeft />
                   </Button>
                   <div className="text-sm sm:text-base text-nowrap">
-                    Page {currentPage.pageNumber} of {pages.length}
+                    {t('pagination', { page: currentPage.pageNumber, total: pages.length})}
                   </div>
                   <Button
                     variant="outline"
@@ -237,16 +240,16 @@ export function BookContent(
                   <AlertDialog open={isContentEditing} onOpenChange={setIsContentEditing}>
                     <AlertDialogTrigger asChild>
                       <Button>
-                        Edit
+                        {t('edit')}
                       </Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                       <AlertDialogHeader>
-                        <AlertDialogTitle>Update page content</AlertDialogTitle>
+                        <AlertDialogTitle>{t('updateContent')}</AlertDialogTitle>
                         <AlertDialogDescription>
                           {isEditError && (
                             <span className="inline-block font-semibold text-red-500 pb-1">
-                              Page content can not be empty.
+                              {t('contentError')}
                             </span>
                           )}
                           <Textarea
@@ -263,7 +266,7 @@ export function BookContent(
                             setIsEditError(false);
                           }}
                         >
-                          Cancel
+                          {t('cancel')}
                         </AlertDialogCancel>
                         <AlertDialogAction
                           onClick={async (e) => {
@@ -289,7 +292,7 @@ export function BookContent(
                             router.refresh();
                           }}
                         >
-                          Update
+                          {t('update')}
                         </AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>

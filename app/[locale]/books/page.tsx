@@ -1,25 +1,32 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { AllBooks } from "@/components/Books/AllBooks";
 import { fetchBooks, totalBookCount } from "@/lib/db/fetchBook";
 
-export const metadata: Metadata = {
-  title: "Books | Children's Book AI",
-  description: "Books page is where you can find all the books created by authors.",
-  openGraph: {
-    type: "website",
-    url: "https://childrensbookai.net/books",
-    title: "Books | Children's Book AI",
-    description: "Books page is where you can find all the books created by authors.",
-    images: [
-      {
-        url: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/logo-square.png`,
-        width: 1024,
-        height: 1024,
-        alt: "Books | Children's Book AI",
-      },
-    ],
-  },
-};
+export async function generateMetadata(
+  { params: { locale } }: { params: { locale: string } }
+): Promise<Metadata> {
+  const t = await getTranslations({locale, namespace: 'Metadata'});
+
+  return {
+    title: t('books.title'),
+    description: t('books.description'),
+    openGraph: {
+      type: "website",
+      url: "https://childrensbookai.net/books",
+      title: t('books.title'),
+      description: t('books.description'),
+      images: [
+        {
+          url: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/logo-square.png`,
+          width: 1024,
+          height: 1024,
+          alt: t('books.title'),
+        },
+      ],
+    },
+  };
+}
 
 type BooksPageProps = {
   searchParams: {

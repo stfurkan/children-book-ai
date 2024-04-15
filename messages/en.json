@@ -1,0 +1,208 @@
+{
+  "Metadata": {
+    "home": {
+      "title": "Children’s Book AI",
+      "description": "Children’s Book AI is a platform for authors to write and publish children’s books. We use AI to help authors write and publish books faster.",
+      "keywords": "children's book, AI, artificial intelligence, personalized book, storybook, children's story"
+    },
+    "book": {
+      "title": "{bookTitle} | Children's Book AI"
+    },
+    "books": {
+      "title": "Books | Children's Book AI",
+      "description": "Browse and read children’s books written by authors from around the world."
+    },
+    "authorBooks": {
+      "title": "{authorName} | Children's Book AI",
+      "description": "Browse and read children’s books written by {authorName}."
+    },
+    "newBook": {
+      "title": "Create a New Book | Children's Book AI",
+      "description": "Create a new children’s book with the help of AI."
+    },
+    "privacy": {
+      "title": "Privacy Policy | Children's Book AI",
+      "description": "Children’s Book AI Privacy Policy"
+    },
+    "profile": {
+      "title": "Author Profile | Children's Book AI",
+      "description": "Update your author profile on Children’s Book AI."
+    },
+    "signIn": {
+      "title": "Sign In | Children's Book AI",
+      "description": "Sign in to Children’s Book AI to start creating your children’s book."
+    },
+    "terms": {
+      "title": "Terms of Service | Children's Book AI",
+      "description": "Children’s Book AI Terms of Service"
+    }
+  },
+  "Header": {
+    "browseBooks": "Browse Books",
+    "signIn": "Sign In",
+    "menu": "Menu",
+    "profile": "Profile",
+    "myBooks": "My Books",
+    "newBook": "Create New Book",
+    "signOut": "Sign Out"
+  },
+  "Footer": {
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  },
+  "Pagination": {
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "Loading": {
+    "loading": "Loading..."
+  },
+  "Home": {
+    "title": "Bring Your Children’s Stories to Life",
+    "subtitle": "Craft unique and personalized children’s books with the help of AI.",
+    "ctaSignIn": "Sign in to Start",
+    "ctaCreate": "Start Creating Now",
+    "howItWorks": {
+      "title": "How It Works",
+      "steps": [
+        {
+          "title": "Write Your Adventure",
+          "description": "Give us your story idea, and our AI will craft a unique and personalized children’s book."
+        },
+        {
+          "title": "Personalize Your Story",
+          "description": "Add characters, names, and special messages to make your story truly one-of-a-kind."
+        },
+        {
+          "title": "Bring It to Life",
+          "description": "Watch as our AI illustrates your story. Customize further with our intuitive editing tools."
+        },
+        {
+          "title": "Share the Magic",
+          "description": "Download your story, print it, or share it digitally. Create moments that last a lifetime."
+        }
+      ]
+    },
+    "featuredBooks": "Featured Books"
+  },
+  "SignIn": {
+    "title": "Sign In",
+    "subtitle": "to continue to Children’s Book AI",
+    "google": "Sign in with Google",
+    "github": "Sign in with GitHub",
+    "agreement": "By signing in, you agree to our {terms} and {privacy}.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  },
+  "AllBooks": {
+    "books": "Books",
+    "totalBooks": "{count, plural, =0 {No books found} one {1 book found} other {# books found}}",
+    "notFound": "No books found",
+    "AuthorDetails": {
+      "author": "Author"
+    },
+    "BookSearch": {
+      "clearSearch": "Clear Search",
+      "searchPlaceholder": "Search books..."
+    }
+  },
+  "BookTitle": {
+    "author": "by {author}",
+    "DownloadPDF": {
+      "button": "Download Book",
+      "alert": {
+        "title": "Generating Book",
+        "description": "Your book is being prepared for download. Please wait a moment."
+      }
+    },
+    "bookStatus": {
+      "title": "Book Status",
+      "draft": "Draft",
+      "published": "Published"
+    }
+  },
+  "BookNav": {
+    "content": "Content",
+    "summary": "Summary",
+    "page": "Page {page}"
+  },
+  "BookPage": {
+    "summary": "Summary",
+    "changeImage": "Change Image",
+    "createNewImage": "Create New Image",
+    "imageError": "Image description can not be empty.",
+    "imageLoading": "Image is processing. Please wait...",
+    "imageLabel": "Describe the image",
+    "cancel": "Cancel",
+    "update": "Update",
+    "create": "Create",
+    "startReading": "Start Reading",
+    "edit": "Edit",
+    "updateSummary": "Update book summary",
+    "summaryError": "Book summary can not be empty.",
+    "pagination": "Page {page} of {total}",
+    "updateContent": "Update page content",
+    "contentError": "Page content can not be empty."
+  },
+  "AuthorProfile": {
+    "title": "Author Profile",
+    "loading": "Loading...",
+    "form": {
+      "name": {
+        "label": "Author Name",
+        "placeholder": "Enter your name",
+        "description": "Your name will be displayed on your book.",
+        "minError": "Name must be at least 5 characters.",
+        "maxError": "Name must not be longer than 150 characters."
+      },
+      "bio": {
+        "label": "Author Bio",
+        "placeholder": "Enter your bio",
+        "description": "A short description about yourself.",
+        "minError": "Bio must be at least 10 characters.",
+        "maxError": "Bio must not be longer than 300 characters."
+      },
+      "aiKey": {
+        "label": "Your OpenAI API Key",
+        "placeholder": "Enter your OpenAI API key",
+        "description": "This is optional, but it will be used to generate content for your book. If you don’t want to update it, leave it empty. It will use your existing key. If your key does not work, you cannot generate content. If you don’t know how to get an OpenAI API key, please visit {openAIDoc}."
+      }
+    },
+    "openAILink": "the OpenAI quick start guide",
+    "save": "Save Changes",
+    "toast": {
+      "created": "Author details saved!",
+      "updated": "Author details updated!",
+      "description": "Your author details have been saved successfully."
+    }
+  },
+  "NewBook": {
+    "title": "Create a new book",
+    "loading": "Creating your book...",
+    "error": "Error",
+    "genericError": "Failed to create a new book. Please try again.",
+    "form": {
+      "page": {
+        "label": "Total Pages",
+        "placeholder": "Enter the total page number of your children's book.",
+        "description": "Select a number between 1 and 24.",
+        "typeError": "Page must be an integer.",
+        "minError": "Page must be at least 1.",
+        "maxError": "Page must not be more than 24."
+      },
+      "story": {
+        "label": "Story",
+        "placeholder": "Write the main idea of you children's book in 300 characters or less.",
+        "description": "Make sure to keep it short and sweet.",
+        "minError": "Story idea must be at least 10 characters.",
+        "maxError": "Story idea must not be longer than 300 characters."
+      }
+    },
+    "create": "Create Book"
+  },
+  "BookCard": {
+    "author": "by {author}",
+    "draft": "Draft",
+    "published": "Published"
+  }
+}
