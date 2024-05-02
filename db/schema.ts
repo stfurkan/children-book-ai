@@ -42,7 +42,7 @@ export const pages = sqliteTable("pages", {
 
 // Below is the schema for the SQLite database used by the NextAuth adapter.
 export const users = sqliteTable("user", {
-  id: text("id").notNull().primaryKey(),
+  id: text("id").primaryKey().notNull().$defaultFn(() => createId()),
   name: text("name"),
   email: text("email").notNull(),
   emailVerified: integer("emailVerified", { mode: "timestamp_ms" }),
