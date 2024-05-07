@@ -6,6 +6,7 @@ import { auth } from "./auth";
 import { intlConfig } from "@/messages/config";
 const { locales, defaultLocale, localePrefix } = intlConfig;
 
+/*
 const publicRoutes = [
   '/',
   '/books',
@@ -13,6 +14,7 @@ const publicRoutes = [
   '/terms-of-service',
   '/signin',
 ];
+*/
 
 const intlMiddleware = createIntlMiddleware({
   locales,
@@ -20,6 +22,7 @@ const intlMiddleware = createIntlMiddleware({
   localePrefix
 });
 
+/*
 const authMiddleware = auth((req) => {
   // private routes here
   const session = req.auth
@@ -37,8 +40,10 @@ const authMiddleware = auth((req) => {
     return NextResponse.redirect(url);
   }
 })
+*/
 
 export default function middleware(req: NextRequest) {
+  /*
   const publicPathnameRegex = RegExp(
     `^(/(${locales.join("|")}))?(/book/[^/]+|/book/[^/]+/summary|/book/[^/]+/read|/books/[^/]+|${publicRoutes.flatMap((p) => {
       if (p === "/") {
@@ -56,14 +61,17 @@ export default function middleware(req: NextRequest) {
   } else {
     return (authMiddleware as any)(req)
   }
+  */
+
+  return intlMiddleware(req)
 }
 
 export const config = {
   matcher: [
     '/((?!api|_next/static|_next/image|favicon.ico).*)',
-    '/book/:bookId',
-    '/book/:bookId/summary',
-    '/book/:bookId/read',
-    '/books/:userId',
+    // '/book/:bookId',
+    // '/book/:bookId/summary',
+    // '/book/:bookId/read',
+    // '/books/:userId',
   ],
 }

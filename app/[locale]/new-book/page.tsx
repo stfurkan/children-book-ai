@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
@@ -33,6 +34,11 @@ export async function generateMetadata(
 
 export default async function NewBookPage() {
   const session = await auth();
+
+  if (!session) {
+    notFound();
+  }
+
   const userHasAuthorDetails = !!(await getAuthorDetails(session?.user?.id!));
 
   if (!userHasAuthorDetails) {

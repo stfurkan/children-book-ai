@@ -32,11 +32,12 @@ export async function generateMetadata(
 
 export default async function AuthorProfile() {
   const session = await auth();
-  const userAuthorDetails = await getAuthorDetails(session?.user?.id!);
 
   if (!session) {
     notFound();
   }
+  
+  const userAuthorDetails = await getAuthorDetails(session?.user?.id!);
 
   return (
     <div className="flex flex-row justify-center">
